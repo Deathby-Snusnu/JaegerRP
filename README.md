@@ -239,5 +239,10 @@ ohne diese API wird mit einer Meldung abgewiesen.
 - `data/Racial.lua`: rassenspezifische Markierungs- und Faehrtentexte.
 - `tests/test_addon.lua`: Lokaler Regressionstest.
 
+Die Kernmodule verwenden die projektweit einheitlichen Funktionen
+`BuildText`, `SendText`, `CooldownReady` und `StartCooldown`. `TryText` bleibt
+die oeffentliche manuelle Schnittstelle; gesprochene Texte und markierte
+`/me`-Handlungen behalten ihre unterschiedlichen Kanaele.
+
 MIT-Lizenz, Copyright (c) 2026 Hannes, siehe `LICENSE`.
 Aenderungen stehen in `CHANGELOG.md`.

@@ -2,6 +2,14 @@
 
 Aenderungen an Jaeger RP werden in dieser Datei dokumentiert.
 
+## [Unreleased]
+
+### Geaendert
+
+- Gemeinsame Kernfunktionsnamen und Modulkonventionen mit den anderen AddOns
+  in README und Styleguide abgestimmt; Jaeger-spezifische Text- und
+  Emote-Ablaufe bleiben unveraendert.
+
 ## [0.3.0] - 2026-10-09
 
 ### Hinzugefuegt
