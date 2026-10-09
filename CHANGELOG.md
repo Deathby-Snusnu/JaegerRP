@@ -2,6 +2,16 @@
 
 Aenderungen an Jaeger RP werden in dieser Datei dokumentiert.
 
+## [0.3.0] - 2026-10-09
+
+### Hinzugefuegt
+
+- Rassenspezifische Texte fuer HUNTERS_MARK und TRACKING bei Zwergen,
+  Nachtelfen, Orcs, Tauren und Trollen.
+- Rassentexte werden zwischen eigenen Charaktertexten und allgemeinen
+  Jaegertexten ausgewaehlt; Scourge wird als Undead behandelt.
+- Regressionstests fuer Prioritaet, Rassen-Fallback und Scourge-Alias.
+
 ## [0.2.0] - 2026-10-09
 
 ### Hinzugefuegt

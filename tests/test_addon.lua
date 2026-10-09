@@ -140,6 +140,52 @@ check(client.env.JaegerRP_CharacterDB.cooldown == 20, "default cooldown")
 check(client.env.JaegerRP_CharacterDB.chatChannel == "SAY", "default channel")
 check(client.env.JaegerRP == client.addon, "public API")
 
+-- Rassentexte werden vor den allgemeinen Texten gewaehlt.
+local dwarfHunter = newClient({ race = "Dwarf" })
+dwarfHunter.command("chance 100")
+dwarfHunter.command("cooldown 0")
+dwarfHunter.target = "Faehrte"
+local dwarfText = dwarfHunter.addon.BuildText("TRACKING")
+local dwarfChoices = dwarfHunter.addon.racial.Dwarf.TRACKING.ziel
+local isDwarfText = false
+for _, text in ipairs(dwarfChoices) do
+    if text == dwarfText then
+        isDwarfText = true
+        break
+    end
+end
+check(isDwarfText, "race-specific text is selected before general text")
+
+-- Voelker ohne eigenen Pool verwenden weiterhin allgemeine Jaegertexte.
+local fallbackHunter = newClient({ race = "Human" })
+fallbackHunter.target = "Faehrte"
+local fallbackText = fallbackHunter.addon.BuildText("TRACKING")
+local generalChoices = fallbackHunter.addon.texts.TRACKING.ziel
+local isGeneralText = false
+for _, text in ipairs(generalChoices) do
+    if text == fallbackText then
+        isGeneralText = true
+        break
+    end
+end
+check(isGeneralText, "missing racial text falls back to general text")
+
+-- Eigene Texte haben Vorrang vor Rassentexten.
+dwarfHunter.env.JaegerRP_CharacterDB.personalTexts.TRACKING = {
+    "Eigene Spur fuer %s.",
+}
+check(dwarfHunter.addon.BuildText("TRACKING") == "Eigene Spur fuer Faehrte.",
+    "personal text overrides racial text")
+
+-- Scourge verwendet dieselben Rassentexte wie Undead.
+local undeadHunter = newClient({ race = "Scourge" })
+undeadHunter.target = "Spur"
+undeadHunter.addon.racial.Undead = {
+    TRACKING = { ziel = { "Untote Spur fuer %s." } },
+}
+check(undeadHunter.addon.BuildText("TRACKING") == "Untote Spur fuer Spur.",
+    "Scourge race name aliases to Undead")
+
 -- Fuer deterministische Texttests eigene Texte verwenden.
 client.command("chance 100")
 client.command("cooldown 0")

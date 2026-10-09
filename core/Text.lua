@@ -41,14 +41,20 @@ end
 
 function addon.BuildText(key)
     local targetName = UnitExists("target") and UnitName("target") or nil
-
-    local pool
-    if addon.db and addon.db.personalTexts then
-        pool = addon.db.personalTexts[key]
-    end
-    if pool == nil then
-        pool = addon.texts[key]
+    local personalPool = addon.db and addon.db.personalTexts
+        and addon.db.personalTexts[key]
+    if personalPool ~= nil then
+        return ChooseText(personalPool, targetName)
     end
 
-    return ChooseText(pool, targetName)
+    local _, race = UnitRace("player")
+    if race == "Scourge" then
+        race = "Undead"
+    end
+    local racialPool = addon.racial[race] and addon.racial[race][key]
+    if racialPool ~= nil then
+        return ChooseText(racialPool, targetName)
+    end
+
+    return ChooseText(addon.texts[key], targetName)
 end

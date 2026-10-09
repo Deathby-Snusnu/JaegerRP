@@ -12,6 +12,11 @@ Die Textdaten unterscheiden zwischen gesprochenem RP und Handlungen:
 - die Sternchen dienen nur als Markierung in der Textdatenbank und erscheinen
   nicht im Chat.
 
+Fuer Jaeger der klassischen spielbaren Voelker gibt es zusaetzlich eigene
+Texte fuer Jaegermarkierung und Faehrtensuche. Eigene Charaktertexte haben
+Vorrang vor Rassentexten; wenn kein Rassentext vorhanden ist, werden die
+allgemeinen Jaegertexte verwendet.
+
 ## Installation
 
 Den Ordner `JaegerRP` in das `Interface\AddOns`-Verzeichnis des WoW-Clients
@@ -132,6 +137,17 @@ oder prueft kein Spielziel.
 Die Fernkampftexte sind absichtlich weitgehend waffenneutral formuliert und
 passen damit zu Bogen, Armbrust und Schusswaffe.
 
+## Rassenspezifische Texte
+
+`data/Racial.lua` enthaelt eigene Varianten fuer `HUNTERS_MARK` und
+`TRACKING` fuer Zwerge, Nachtelfen, Orcs, Tauren und Trolle. Andere Voelker
+verwenden die allgemeinen Textpools. `Scourge` wird wie in den anderen
+Klassen-AddOns als `Undead` behandelt.
+
+Die Auswahlreihenfolge ist: eigene Charaktertexte, passender Rassentext,
+allgemeiner Jaegertext. Ziel- und Gruppenpools sowie `*...*`-Emotes
+funktionieren fuer rassenspezifische Texte genauso wie fuer allgemeine Texte.
+
 ## Eigene Texte
 
 Eigene Textpools koennen in `JaegerRP_CharacterDB.personalTexts` mit
@@ -220,6 +236,7 @@ ohne diese API wird mit einer Meldung abgewiesen.
 - `core/Cooldown.lua`: RP-Cooldown.
 - `core/Commands.lua`: `/jrp`-Befehle.
 - `data/Texts.lua`: RP-Textdaten.
+- `data/Racial.lua`: rassenspezifische Markierungs- und Faehrtentexte.
 - `tests/test_addon.lua`: Lokaler Regressionstest.
 
 MIT-Lizenz, Copyright (c) 2026 Hannes, siehe `LICENSE`.
