@@ -1,0 +1,15 @@
+## Interface: 16001
+## Title: Jaeger RP
+## Notes: Rollenspieltexte fuer Jaeger und ihre Begleiter
+## Author: Hannes
+## Version: 0.2.0
+## SavedVariablesPerCharacter: JaegerRP_CharacterDB
+
+config\Settings.lua
+data\Texts.lua
+core\Database.lua
+core\Text.lua
+core\Chat.lua
+core\Cooldown.lua
+core\Commands.lua
+JaegerRP.lua
