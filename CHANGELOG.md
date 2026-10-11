@@ -61,3 +61,7 @@ Aenderungen an Jaeger RP werden in dieser Datei dokumentiert.
 - Eigene Textpools fuer Jaegerfaehigkeiten, Begleiter und Fallen.
 - Eigene Textschluessel fuer Aspekt des Falken, Geparden und Affen.
 - Konfigurierbarer Chatkanal, Charaktereinstellungen und Regressionstests.
+
+## 2026-10-11 - Zielauflösung
+- RP-Zielermittlung unterscheidet jetzt freundliche, Selbst- und Pet-Fähigkeiten.
+- Feindliche aktuelle Ziele werden bei Selbst-/Freundzaubern nicht mehr irrtuemlich fuer %s verwendet.

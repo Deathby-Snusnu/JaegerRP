@@ -1,23 +1,36 @@
 local _, addon = ...
 
+-- Faehigkeiten, deren mechanisches Ziel nicht das aktuelle Gegner-Target ist.
+local SELF_ONLY = {
+    ASPECT_HAWK = true,
+    ASPECT_CHEETAH = true,
+    ASPECT_MONKEY = true,
+    RAPID_FIRE = true,
+    DISENGAGE = true,
+    TRACKING = true,
+    CAMOUFLAGE = true,
+}
+
+local PET_TARGET = {
+    MEND_PET = true,
+    REVIVE_PET = true,
+    FEED_PET = true,
+}
+
 local function ChooseText(pool, targetName)
     if type(pool) ~= "table" then
         return nil
     end
-
     local choices = pool
     if #pool == 0 then
         choices = targetName and pool.ziel or pool.gruppe
-
         if type(choices) ~= "table" or #choices == 0 then
             choices = pool.gruppe
         end
     end
-
     if type(choices) ~= "table" or #choices == 0 then
         return nil
     end
-
     local usable = {}
     for _, text in ipairs(choices) do
         if type(text) == "string" and text ~= ""
@@ -25,36 +38,44 @@ local function ChooseText(pool, targetName)
             usable[#usable + 1] = text
         end
     end
-
     if #usable == 0 then
         return nil
     end
-
     local text = usable[math.random(#usable)]
     if targetName then
-        text = text:gsub("%%s", function()
+        return (text:gsub("%%s", function()
             return targetName
-        end)
+        end))
     end
     return text
 end
 
+local function ResolveTargetName(key)
+    if SELF_ONLY[key] then
+        return nil
+    end
+    if PET_TARGET[key] then
+        if UnitExists("pet") then
+            return UnitName("pet")
+        end
+        return nil
+    end
+    if UnitExists("target") then
+        return UnitName("target")
+    end
+    return nil
+end
+
 function addon.BuildText(key)
-    local targetName = UnitExists("target") and UnitName("target") or nil
-    local personalPool = addon.db and addon.db.personalTexts
-        and addon.db.personalTexts[key]
-    if personalPool ~= nil then
+    local targetName = ResolveTargetName(key)
+    local race = addon.GetPlayerRaceToken and addon.GetPlayerRaceToken() or select(2, UnitRace("player"))
+    local personalPool = addon.db.personalTexts[key]
+    if personalPool then
         return ChooseText(personalPool, targetName)
     end
-
-    local _, race = UnitRace("player")
-    if race == "Scourge" then
-        race = "Undead"
-    end
     local racialPool = addon.racial[race] and addon.racial[race][key]
-    if racialPool ~= nil then
+    if racialPool then
         return ChooseText(racialPool, targetName)
     end
-
     return ChooseText(addon.texts[key], targetName)
 end
