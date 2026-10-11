@@ -4,6 +4,7 @@ local function ShowHelp()
     addon.Notify("/jrp help | list | status")
     addon.Notify("/jrp chance 0-100 | /jrp cooldown 0-3600")
     addon.Notify("/jrp channel [SAY | YELL | PARTY | RAID | INSTANCE_CHAT | AUTO]")
+    addon.Notify("/jrp language deDE|enUS|frFR")
     addon.Notify("/jrp <textschluessel> - keine automatische Ausgabe bei Aktionen.")
     addon.Notify("*...* markiert /me-Emotes; normale Texte nutzen den eingestellten Sprachkanal.")
 end
@@ -62,6 +63,30 @@ local function HandleList()
     end
 end
 
+
+local function HandleLanguage(argument)
+    if argument == "" then
+        addon.Notify("Ausgabesprache: " .. addon.GetOutputLanguage() .. " (deDE, enUS, frFR)")
+        return
+    end
+    local aliases = { de = "deDE", dede = "deDE", deDE = "deDE", en = "enUS", enus = "enUS", enUS = "enUS", fr = "frFR", frfr = "frFR", frFR = "frFR" }
+    local language = aliases[argument] or aliases[string.lower(argument or "")]
+    if not language or not addon.outputLanguages[language] then
+        addon.Notify("Sprachen: deDE, enUS, frFR")
+        return
+    end
+    local ok, reason = addon.SetOutputLanguage(language)
+    if not ok then
+        if reason == "not_loaded" then
+            addon.Notify("Sprachdateien fuer " .. language .. " wurden nicht geladen. Bitte AddOn-Dateien/TOC pruefen.")
+        else
+            addon.Notify("Sprache konnte nicht aktiviert werden.")
+        end
+        return
+    end
+    addon.Notify("Ausgabesprache: " .. language .. " (" .. addon.outputLanguageNames[language] .. ")")
+end
+
 function addon.HandleCommand(message)
     if not addon.ready then
         addon.Notify("Noch nicht geladen. Bitte wartet auf PLAYER_LOGIN.")
@@ -77,12 +102,14 @@ function addon.HandleCommand(message)
     elseif command == "list" and argument == "" then
         HandleList()
     elseif command == "status" and argument == "" then
-        addon.Notify(string.format("Chance: %g%% | Cooldown: %gs | Sprachkanal: %s",
-            addon.db.textChance, addon.db.cooldown, addon.db.chatChannel))
+        addon.Notify(string.format("Chance: %g%% | Cooldown: %gs | Sprachkanal: %s | Sprache: %s",
+            addon.db.textChance, addon.db.cooldown, addon.db.chatChannel, addon.GetOutputLanguage()))
     elseif command == "chance" or command == "cooldown" then
         HandleNumber(command, argument)
     elseif command == "channel" then
         HandleChannel(argument)
+    elseif command == "language" or command == "lang" then
+        HandleLanguage(argument)
     elseif argument ~= "" then
         addon.Notify("Benutzung: /jrp <textschluessel>. /jrp help zeigt die Befehle.")
     else

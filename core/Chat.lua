@@ -16,6 +16,7 @@ local racialLanguageIDs = {
     Dwarf = 6,
     Gnome = 13,
     NightElf = 2,
+    Skyborne = 2,
     Draenei = 35,
     Orc = 1,
     Troll = 14,

@@ -73,9 +73,10 @@ function addon.BuildText(key)
     if personalPool then
         return ChooseText(personalPool, targetName)
     end
-    local racialPool = addon.racial[race] and addon.racial[race][key]
-    if racialPool then
-        return ChooseText(racialPool, targetName)
-    end
-    return ChooseText(addon.texts[key], targetName)
+    local lang = addon.GetOutputLanguage()
+    local pool = addon.GetLocalePoolExact(lang, "racial", race, key)
+        or addon.GetLocalePoolExact(lang, "texts", key)
+        or addon.GetLocalePoolExact("deDE", "racial", race, key)
+        or addon.GetLocalePoolExact("deDE", "texts", key)
+    return ChooseText(pool, targetName)
 end

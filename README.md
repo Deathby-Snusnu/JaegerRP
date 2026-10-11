@@ -246,3 +246,7 @@ die oeffentliche manuelle Schnittstelle; gesprochene Texte und markierte
 
 MIT-Lizenz, Copyright (c) 2026 Hannes, siehe `LICENSE`.
 Aenderungen stehen in `CHANGELOG.md`.
+
+## RP-Ausgabesprache
+
+Die RP-Texte koennen pro Charakter auf `deDE`, `enUS` oder `frFR` gestellt werden. Beispiel: `/jrp language frFR`. Fehlende Alt-Texpools fallen sicher auf Deutsch zurueck.
