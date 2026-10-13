@@ -1,68 +1,71 @@
-
-## 2026-10-11 - Sprachwahl FIX2
-
-- Ausgabesprache besitzt nun einen expliziten Laufzeitwert und wird beim Umschalten sofort aktiviert.
-- Locale-Tabellen deDE/enUS/frFR werden robust einzeln initialisiert.
-- Eine Sprache kann nur aktiviert werden, wenn ihre Dateien tatsaechlich geladen wurden.
-# Localization update 2026-10-11
-
-- RP output language can be selected per character: deDE, enUS, frFR.
-- Text data moved into language-specific `locales/<locale>/` files.
-- German is used as a safe fallback for legacy pools not translated yet.
-- Command: `language` / `lang` on the add-on slash command.
-
 # Changelog
 
-Aenderungen an Jaeger RP werden in dieser Datei dokumentiert.
+Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 
 ## [Unreleased]
 
 ### Geaendert
 
+- Zielaufloesung unterscheidet feindliche, freundliche, Selbst- und
+  Begleiterfaehigkeiten. Ein unpassendes feindliches Ziel wird nicht fuer
+  `%s` bei Selbst-/Freundzaubern verwendet.
 - Gemeinsame Kernfunktionsnamen und Modulkonventionen mit den anderen AddOns
-  in README und Styleguide abgestimmt; Jaeger-spezifische Text- und
-  Emote-Ablaufe bleiben unveraendert.
+  abgestimmt; Jaeger-spezifische Text- und Emote-Ablaufe bleiben erhalten.
+
+## [2026-10-11] Sprachwahl
+
+### Hinzugefuegt
+
+- RP-Ausgabesprache pro Charakter: `deDE`, `enUS` oder `frFR`.
+- Sprachdateien unter `locales/<locale>/`; Deutsch dient fuer fehlende
+  aeltere Textpools als Fallback.
+- Befehle `language` und `lang` zur Auswahl der RP-Ausgabesprache.
+
+### Geaendert
+
+- Locale-Tabellen werden robust einzeln initialisiert.
+- Eine Sprache kann nur aktiviert werden, wenn ihre Dateien geladen wurden.
 
 ## [0.3.0] - 2026-10-09
 
 ### Hinzugefuegt
 
-- Rassenspezifische Texte fuer HUNTERS_MARK und TRACKING bei Zwergen,
+- Rassenspezifische Texte fuer `HUNTERS_MARK` und `TRACKING` bei Zwergen,
   Nachtelfen, Orcs, Tauren und Trollen.
+- Regressionstests fuer Prioritaet, Rassen-Fallback und Scourge-Alias.
+
+### Geaendert
+
 - Rassentexte werden zwischen eigenen Charaktertexten und allgemeinen
   Jaegertexten ausgewaehlt; Scourge wird als Undead behandelt.
-- Regressionstests fuer Prioritaet, Rassen-Fallback und Scourge-Alias.
 
 ## [0.2.0] - 2026-10-09
 
 ### Hinzugefuegt
 
 - Gemischte RP-Ausgabe aus gesprochenen Texten und echten `/me`-Emotes.
-- `*...*` als eindeutige Emote-Markierung in der Textdatenbank.
-- Automatisches Entfernen der Sternchen vor der Emote-Ausgabe.
-- Deutlich erweiterte Textpools fuer Angriffe, Begleiter, Fallen, Aspekte,
+- `*...*` als Emote-Markierung in der Textdatenbank; Markierungen werden
+  vor der Ausgabe entfernt.
+- Erweiterte Textpools fuer Angriffe, Begleiter, Fallen, Aspekte,
   Aufklaerung, Nahkampf und Abschluss.
 - Tests fuer `/say`/`/me`, Emote-Markierungen und persoenliche Textschluessel.
-- Eigene, nur in `personalTexts` vorhandene Textschluessel werden von
-  `/jrp list` mit beruecksichtigt.
+- Nur in `personalTexts` vorhandene Schluessel werden von `/jrp list`
+  beruecksichtigt.
 
 ### Geaendert
 
 - Fernkampftexte sind waffenneutral fuer Bogen, Armbrust und Schusswaffen.
-- RP-Texte unterscheiden staerker zwischen Gesprochenem und sichtbarer Handlung.
+- RP-Texte unterscheiden staerker zwischen Gesprochenem und sichtbarer
+  Handlung; Begleitertexte betonen die Beziehung zwischen Jaeger und Tier.
 - `EMOTE` ist kein manuell einstellbarer Sprachkanal mehr. Markierte Texte
   werden automatisch als `/me` gesendet.
-- Begleitertexte wurden weniger generisch und staerker auf die Beziehung
-  zwischen Jaeger und Tier ausgerichtet.
-- Hilfe, Statusausgabe und README wurden an das neue Textsystem angepasst.
+- Hilfe, Statusausgabe und README an das Textsystem angepasst.
 - Addon-Version auf `0.2.0` erhoeht.
 
 ### Behoben
 
-- `JaegerRP_CharacterDB.personalTexts` wurde dokumentiert und getestet, aber
-  von `core/Text.lua` bisher nicht ausgewertet. Eigene Textpools werden nun
-  korrekt bevorzugt.
-- Fehlerhafte oder leere Emote-Markierungen werden nicht mehr gesendet.
+- `JaegerRP_CharacterDB.personalTexts` wird bei der Textauswahl ausgewertet.
+- Fehlerhafte oder leere Emote-Markierungen werden nicht gesendet.
 - Textlaenge wird nach dem Entfernen der Emote-Markierung geprueft.
 
 ## [0.1.0] - 2026-10-09
@@ -71,10 +74,6 @@ Aenderungen an Jaeger RP werden in dieser Datei dokumentiert.
 
 - Grundstruktur mit TOC-Metadaten, `/jrp`-Befehlen und
   `JaegerRP_CharacterDB`.
-- Eigene Textpools fuer Jaegerfaehigkeiten, Begleiter und Fallen.
-- Eigene Textschluessel fuer Aspekt des Falken, Geparden und Affen.
+- Eigene Textpools fuer Jaegerfaehigkeiten, Begleiter und Fallen sowie
+  Textschluessel fuer Aspekte des Falken, Geparden und Affen.
 - Konfigurierbarer Chatkanal, Charaktereinstellungen und Regressionstests.
-
-## 2026-10-11 - Zielauflösung
-- RP-Zielermittlung unterscheidet jetzt freundliche, Selbst- und Pet-Fähigkeiten.
-- Feindliche aktuelle Ziele werden bei Selbst-/Freundzaubern nicht mehr irrtuemlich fuer %s verwendet.

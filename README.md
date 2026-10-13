@@ -1,5 +1,7 @@
 # Jaeger RP
 
+## Beschreibung
+
 Eigenstaendiges Rollenspiel-Addon fuer Jaeger. Es stellt zufaellige
 Rollenspieltexte zu Jaeger-Faehigkeiten, Fallen, Aufklaerung und Begleitern
 bereit. Texte werden nur auf manuellen Befehl ausgegeben; das Addon reagiert
@@ -68,7 +70,7 @@ Das Addon prueft keinen Cast-Erfolg.
 
 ## Gesprochen oder /me
 
-Die Unterscheidung wird direkt in `data/Texts.lua` gepflegt.
+Die Unterscheidung wird direkt in `locales/<locale>/Texts.lua` gepflegt.
 
 Gesprochen:
 
@@ -104,6 +106,7 @@ immer als `/me` ausgegeben.
 | `/jrp cooldown <0-3600>` | Cooldown in Sekunden setzen |
 | `/jrp channel` | Aktuellen Sprachkanal anzeigen |
 | `/jrp channel <kanal>` | Sprachkanal setzen |
+| `/jrp language [deDE\|enUS\|frFR]` | RP-Ausgabesprache anzeigen oder setzen |
 
 Sprachkanaele: `SAY`, `YELL`, `PARTY`, `RAID`, `INSTANCE_CHAT` und `AUTO`.
 
@@ -139,7 +142,7 @@ passen damit zu Bogen, Armbrust und Schusswaffe.
 
 ## Rassenspezifische Texte
 
-`data/Racial.lua` enthaelt eigene Varianten fuer `HUNTERS_MARK` und
+`locales/<locale>/Racial.lua` enthaelt eigene Varianten fuer `HUNTERS_MARK` und
 `TRACKING` fuer Zwerge, Nachtelfen, Orcs, Tauren und Trolle. Andere Voelker
 verwenden die allgemeinen Textpools. `Scourge` wird wie in den anderen
 Klassen-AddOns als `Undead` behandelt.
@@ -182,7 +185,7 @@ sind maximal 255 Bytes erlaubt. Zeilenumbrueche und `|`-Chatmarkierungen
 werden abgelehnt. Eine nur einseitige `*`-Markierung wird ebenfalls nicht
 gesendet.
 
-## Einstellungen und Daten
+## Einstellungen
 
 Die Standardwerte stehen in `config/Settings.lua`.
 
@@ -190,6 +193,19 @@ Alle Einstellungen und eigenen Texte werden pro Charakter in
 `JaegerRP_CharacterDB` gespeichert. Ungueltige gespeicherte Werte werden mit
 einer Meldung auf Standardwerte zurueckgesetzt; unbekannte Datenbankfelder
 bleiben erhalten.
+
+| Einstellung | Standard | Werte |
+| --- | --- | --- |
+| `outputLanguage` | `deDE` | `deDE`, `enUS`, `frFR` |
+| `textChance` | `30` | Ganze Zahl 0-100 |
+| `cooldown` | `20` | Ganze Zahl 0-3600 Sekunden |
+| `chatChannel` | `SAY` | SAY, YELL, PARTY, RAID, INSTANCE_CHAT, AUTO |
+
+Die RP-Ausgabesprache kann pro Charakter auf `deDE`, `enUS` oder `frFR`
+gestellt werden. Ohne Argument zeigt `/jrp language` die aktuelle Sprache.
+Fehlende aeltere Textpools fallen auf Deutsch zurueck. SAY/YELL koennen
+zusaetzlich die bekannte Volkssprache verwenden, sofern der Client sie
+bereitstellt; diese ist von der RP-Ausgabesprache getrennt.
 
 Aeltere Einstellungen mit `chatChannel = "EMOTE"` werden auf den
 Standard-Sprachkanal SAY zurueckgesetzt, da `/me` nun automatisch ueber die
@@ -220,7 +236,7 @@ Er ersetzt keinen Test im WoW-Client.
 
 ## Kompatibilitaet
 
-Die TOC deklariert Interface `16001` und Version `0.2.0`.
+Die TOC deklariert Interface `16001` und Version `0.3.0`.
 
 Fuer Chat-Ausgaben wird `C_ChatInfo.SendChatMessage` benoetigt. Ein Client
 ohne diese API wird mit einer Meldung abgewiesen.
@@ -235,8 +251,10 @@ ohne diese API wird mit einer Meldung abgewiesen.
 - `core/Chat.lua`: Sprachkanal, Rassensprache und `/me`-Erkennung.
 - `core/Cooldown.lua`: RP-Cooldown.
 - `core/Commands.lua`: `/jrp`-Befehle.
-- `data/Texts.lua`: RP-Textdaten.
-- `data/Racial.lua`: rassenspezifische Markierungs- und Faehrtentexte.
+- `locales/<locale>/Texts.lua`: deutsche, englische und franzoesische
+  RP-Textdaten.
+- `locales/<locale>/Racial.lua`: rassenspezifische Markierungs- und
+  Faehrtentexte je Sprache.
 - `tests/test_addon.lua`: Lokaler Regressionstest.
 
 Die Kernmodule verwenden die projektweit einheitlichen Funktionen
@@ -244,9 +262,15 @@ Die Kernmodule verwenden die projektweit einheitlichen Funktionen
 die oeffentliche manuelle Schnittstelle; gesprochene Texte und markierte
 `/me`-Handlungen behalten ihre unterschiedlichen Kanaele.
 
-MIT-Lizenz, Copyright (c) 2026 Hannes, siehe `LICENSE`.
-Aenderungen stehen in `CHANGELOG.md`.
+Die Dateien unter `data/` sind nicht in der TOC-Ladefolge enthalten; die
+Laufzeittexte liegen in den Locale-Dateien.
 
-## RP-Ausgabesprache
+## Lizenz
 
-Die RP-Texte koennen pro Charakter auf `deDE`, `enUS` oder `frFR` gestellt werden. Beispiel: `/jrp language frFR`. Fehlende Alt-Texpools fallen sicher auf Deutsch zurueck.
+Dieses AddOn verwendet eine **geteilte Lizenzierung nach Dateityp**:
+
+- Programmcode: **Mozilla Public License 2.0 (MPL-2.0)**, siehe [LICENSE](./LICENSE).
+- RP-Dialoge, Emote-/Ambient-Texte und Übersetzungen: **CC BY-SA 4.0**, siehe [LICENSE-TEXTS](./LICENSE-TEXTS).
+- Die verbindliche Zuordnung einer Lua-Datei steht in ihrem `SPDX-License-Identifier`.
+
+Weitere Hinweise und der Markenhinweis stehen in [NOTICE](./NOTICE).
