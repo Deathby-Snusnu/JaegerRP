@@ -1,21 +1,29 @@
 # Changelog
 
-## 0.4.0 - 2026-10-14
-- Einheitliche Textauswahl und Fallback-Logik.
-- Personaltexte fallen bei unbrauchbarem Pool sauber auf Locale-Texte zurueck.
-- Erweiterter DE/EN/FR-Textvorrat.
-
 Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 
 ## [Unreleased]
 
+### Dokumentation
+
+- TOC-Version, Selbst-/Begleiterziele, strukturierte Textauswahl,
+  persoenlicher Fallback und gemeinsame Dokumentationsverweise aktualisiert.
+
 ### Geaendert
 
-- Zielaufloesung unterscheidet feindliche, freundliche, Selbst- und
-  Begleiterfaehigkeiten. Ein unpassendes feindliches Ziel wird nicht fuer
-  `%s` bei Selbst-/Freundzaubern verwendet.
+- Zielaufloesung unterscheidet aktuelle Ziele, Selbst- und
+  Begleiterfaehigkeiten. Selbstfaehigkeiten verwenden keinen Zielnamen;
+  MEND_PET, REVIVE_PET und FEED_PET verwenden nur den Begleiter.
 - Gemeinsame Kernfunktionsnamen und Modulkonventionen mit den anderen AddOns
   abgestimmt; Jaeger-spezifische Text- und Emote-Ablaufe bleiben erhalten.
+
+## [0.4.0] - 2026-10-14
+
+### Geaendert
+
+- Einheitliche Textauswahl und Fallback-Logik.
+- Personaltexte fallen bei unbrauchbarem Pool sauber auf Locale-Texte zurueck.
+- Erweiterter DE/EN/FR-Textvorrat.
 
 ## [2026-10-11] Sprachwahl
 

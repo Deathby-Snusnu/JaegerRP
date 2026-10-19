@@ -19,6 +19,12 @@ Texte fuer Jaegermarkierung und Faehrtensuche. Eigene Charaktertexte haben
 Vorrang vor Rassentexten; wenn kein Rassentext vorhanden ist, werden die
 allgemeinen Jaegertexte verwendet.
 
+## Dokumentation
+
+[Sammlungsuebersicht](../README.md) · [Changelog](CHANGELOG.md) ·
+[Texteditor und Handbuch](../RPTextStudio/HANDBUCH.md) ·
+[Verpackung und gemeinsame Tests](../VERPACKUNG.md)
+
 ## Installation
 
 Den Ordner `JaegerRP` in das `Interface\AddOns`-Verzeichnis des WoW-Clients
@@ -67,6 +73,11 @@ Oder zum Beispiel:
 
 Der RP-Text wird unabhaengig davon versucht, ob der Zauber erfolgreich war.
 Das Addon prueft keinen Cast-Erfolg.
+
+`JaegerRP.TryText(key)` erwartet einen nicht leeren String und normalisiert
+ihn auf Grossbuchstaben. Die Funktion liefert `true` nach einem erfolgreichen
+Chat-API-Aufruf, sonst `false`. Vor `PLAYER_LOGIN` werden Aufrufe mit einer
+Meldung abgelehnt.
 
 ## Gesprochen oder /me
 
@@ -133,9 +144,16 @@ Die Schluessel sind Textkategorien und keine Pruefung auf Zauber im Client.
 Verfuegbarkeit und Namen einzelner Faehigkeiten koennen je nach WoW-Version
 abweichen.
 
-Bei vorhandenem Ziel wird ein Zieltext verwendet und `%s` durch den Zielnamen
-ersetzt. Ohne Ziel werden passende Gruppentexte ausgewaehlt. Das Addon waehlt
-oder prueft kein Spielziel.
+`%s` wird durch den fuer den Schluessel aufgeloesten Namen ersetzt.
+MEND_PET, REVIVE_PET und FEED_PET verwenden ausschliesslich den vorhandenen
+Begleiter. Aspekte, RAPID_FIRE, DISENGAGE, TRACKING und CAMOUFLAGE verwenden
+keinen Zielnamen. Andere Schluessel nutzen das aktuelle Ziel, sofern vorhanden.
+Das Addon waehlt kein Spielziel und prueft keinen Zaubererfolg.
+
+Mit aufgeloestem Namen wird zuerst `ziel`, danach `gruppe` versucht;
+anschliessend sind auch zielunabhaengige Eintraege aus `ziel` moeglich.
+Ohne Namen werden Eintraege mit `%s` nicht ausgewaehlt. `gruppe` setzt keine
+tatsaechliche Spielergruppe voraus.
 
 Die Fernkampftexte sind absichtlich weitgehend waffenneutral formuliert und
 passen damit zu Bogen, Armbrust und Schusswaffe.
@@ -147,9 +165,12 @@ passen damit zu Bogen, Armbrust und Schusswaffe.
 verwenden die allgemeinen Textpools. `Scourge` wird wie in den anderen
 Klassen-AddOns als `Undead` behandelt.
 
-Die Auswahlreihenfolge ist: eigene Charaktertexte, passender Rassentext,
-allgemeiner Jaegertext. Ziel- und Gruppenpools sowie `*...*`-Emotes
-funktionieren fuer rassenspezifische Texte genauso wie fuer allgemeine Texte.
+Ein nutzbarer persoenlicher Text hat Vorrang. Andernfalls wird der erste
+vorhandene Locale-Pool gewaehlt: Rassentext der Ausgabesprache, allgemeiner
+Text der Ausgabesprache, deutscher Rassentext, deutscher allgemeiner Text.
+Ein vorhandener, aber unbrauchbarer Locale-Pool wird nicht uebersprungen.
+Ziel- und Gruppenpools sowie `*...*`-Emotes funktionieren fuer
+rassenspezifische Texte genauso wie fuer allgemeine Texte.
 
 ## Eigene Texte
 
@@ -176,8 +197,9 @@ JaegerRP_CharacterDB.personalTexts.TEST = {
 }
 ```
 
-Eigene Texte ersetzen den jeweiligen allgemeinen Pool. Es duerfen auch eigene
-neue Textschluessel angelegt werden; `/jrp list` zeigt sie zusammen mit den
+Nutzbare eigene Texte haben Vorrang; andernfalls wird der Locale-Pool versucht.
+Es duerfen auch eigene neue Textschluessel angelegt werden;
+`/jrp list` zeigt sie zusammen mit den
 eingebauten Schluesseln an.
 
 Nach Platzhalterersetzung und dem Entfernen einer eventuellen Emote-Markierung
@@ -236,7 +258,8 @@ Er ersetzt keinen Test im WoW-Client.
 
 ## Kompatibilitaet
 
-Die TOC deklariert Interface `16001` und Version `0.3.0`.
+Die TOC deklariert Interface `16001` und Version `0.4.0`. Dies belegt keine
+Kompatibilitaet mit anderen Clientversionen; ein Ingame-Test bleibt erforderlich.
 
 Fuer Chat-Ausgaben wird `C_ChatInfo.SendChatMessage` benoetigt. Ein Client
 ohne diese API wird mit einer Meldung abgewiesen.
@@ -255,6 +278,8 @@ ohne diese API wird mit einer Meldung abgewiesen.
   RP-Textdaten.
 - `locales/<locale>/Racial.lua`: rassenspezifische Markierungs- und
   Faehrtentexte je Sprache.
+- `locales/<locale>/Expansion.lua`: zusaetzliche Laufzeittexte; vom
+  Texteditor nicht bearbeitet.
 - `tests/test_addon.lua`: Lokaler Regressionstest.
 
 Die Kernmodule verwenden die projektweit einheitlichen Funktionen
