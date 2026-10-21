@@ -15,6 +15,16 @@ addon.localeData.enUS.racial = {
     NightElf = {
         HUNTERS_MARK = {ziel={"The forest has seen you, %s. Now so have I.","Even moonshadow cannot hide you from the hunt, %s.","*marks %s's position with a silent sign in the damp earth.*"},gruppe={"The wind carries their scent. The target is marked.","*points silently toward the marked target without disturbing the undergrowth.*"}},
         TRACKING = {ziel={"The forest has not lost your trail, %s.","Every bent fern tells a story, %s.","*follows the faint signs %s left among roots and fern.*"},gruppe={"The forest tells who disturbed its path.","*reads the trail in bent grass and shifted leaves.*"}},
+    
+        SERPENT_STING = {
+            ziel = { "Neuer RP-Text", },
+            gruppe = { "Neuer RP-Text", },
+        },
+    
+        RAPTOR_STRIKE = {
+            ziel = { "Neuer RP-Text", },
+            gruppe = { "Neuer RP-Text", },
+        },
     },
     Orc = {
         HUNTERS_MARK = {ziel={"The hunt has begun, %s. You will not escape.","Run if you want, %s. It only lengthens the hunt.","*fixes %s with a hard stare and gives the companion a short signal.*"},gruppe={"The target is marked. Keep your eyes open.","*indicates the prey to the companions with a grim nod.*"}},
@@ -27,5 +37,9 @@ addon.localeData.enUS.racial = {
     Troll = {
         HUNTERS_MARK = {ziel={"I see you, %s. The hunt ends when I say so.","Keep moving, %s. Makes the chase more fun.","*eyes %s with a crooked grin and memorizes every movement.*"},gruppe={"There is our prey. Keep your eyes open.","*points briefly toward the marked target.*"}},
         TRACKING = {ziel={"Your trail is fresh, %s. The wilds betray you.","The jungle hides plenty, %s, but not your scent.","*tests the air and finds %s's trail among the jungle scents.*"},gruppe={"The trail goes this way. The jungle cannot hide everything.","*tests the air and follows a trail through leaves and damp earth.*"}},
+    },
+
+    Nightelf = {
+        
     },
 }

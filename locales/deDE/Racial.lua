@@ -52,6 +52,44 @@ addon.localeData.deDE.racial = {
                 "Der Wald verraet, wer seinen Pfad stoert.",
             },
         },
+    
+        SERPENT_STING = {
+            ziel = {
+                "Die Natur kennt viele Gifte, %s. Ihr lernt eines davon kennen.",
+                "Ein einziger Treffer genügt, %s. Der Rest ist Geduld.",
+                "Selbst die kleinste Schlange vermag einen Riesen zu Fall zu bringen, %s.",
+                "Elune möge Euch gnädig sein, %s. Mein Pfeil wird es nicht.",
+                "*nimmt %s lautlos ins Visier und lässt ein vergiftetes Geschoss fliegen.*",
+                "*beobachtet regungslos, wie das Gift bei %s seine Wirkung entfaltet.*",
+                "*spannt die Sehne und richtet einen mit Schlangengift präparierten Pfeil auf %s.*",
+            },
+            gruppe = {
+                "Die Schlange schlägt nur einmal zu. Danach wartet sie.",
+                "Nicht jeder Feind fällt durch die Wunde. Manche fallen durch das, was folgt.",
+                "Die Natur lehrt Geduld. Das Gift belohnt sie.",
+                "*prüft sorgfältig die Spitze eines vergifteten Pfeils.*",
+                "*senkt den Bogen und beobachtet schweigend die Wirkung des Giftes.*",
+            },
+        },
+    
+        RAPTOR_STRIKE = {
+            ziel = {
+                "Auch die Krallen des Waldes sind scharf, %s.",
+                "Ein Jäger kennt nicht nur die Distanz, %s!",
+                "Die Wildnis lehrt uns auch den Kampf aus nächster Nähe, %s.",
+                "Elune leite meinen Schlag gegen Euch, %s!",
+                "*setzt zu einem schnellen, präzisen Nahkampfhieb gegen %s an.*",
+                "*tritt dicht an %s heran und führt einen kraftvollen Schlag aus.*",
+                "*wechselt fließend von der Jagdhaltung in den Nahkampf mit %s.*",
+            },
+            gruppe = {
+                "Auch ein in die Enge getriebener Jäger bleibt gefährlich.",
+                "Die Klauen des Raubtiers sind ebenso tödlich wie sein Blick.",
+                "Die Jagd endet nicht, wenn der Feind näherkommt.",
+                "*umfasst die Nahkampfwaffe fester und geht in Kampfstellung.*",
+                "*führt einen schnellen, kontrollierten Nahkampfhieb aus.*",
+            },
+        },
     },
 
     Orc = {
@@ -121,5 +159,9 @@ addon.localeData.deDE.racial = {
                 "Die Spur ist hier lang. Der Dschungel kann viel verbergen, aber nicht alles.",
             },
         },
+    },
+
+    Nightelf = {
+        
     },
 }

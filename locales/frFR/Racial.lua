@@ -15,6 +15,16 @@ addon.localeData.frFR.racial = {
     NightElf = {
         HUNTERS_MARK = {ziel={"La foret vous a vu, %s. Moi aussi desormais.","Meme l ombre de la lune ne vous cachera pas de la chasse, %s.","*marque la position de %s d un signe silencieux dans la terre humide.*"},gruppe={"Le vent porte leur odeur. La cible est marquee.","*indique silencieusement la cible sans troubler les sous-bois.*"}},
         TRACKING = {ziel={"La foret n a pas perdu votre piste, %s.","Chaque fougere pliee raconte quelque chose, %s.","*suit les signes presque invisibles laisses par %s entre racines et fougeres.*"},gruppe={"La foret revele qui trouble son chemin.","*lit la piste dans l herbe pliee et les feuilles deplacees.*"}},
+    
+        SERPENT_STING = {
+            ziel = { "Neuer RP-Text", },
+            gruppe = { "Neuer RP-Text", },
+        },
+    
+        RAPTOR_STRIKE = {
+            ziel = { "Neuer RP-Text", },
+            gruppe = { "Neuer RP-Text", },
+        },
     },
     Orc = {
         HUNTERS_MARK = {ziel={"La chasse a commence, %s. Vous ne vous echapperez pas.","Courez si vous voulez, %s. Cela ne fait que prolonger la chasse.","*fixe %s d un regard dur et adresse un signe bref a son compagnon.*"},gruppe={"La cible est marquee. Gardez les yeux ouverts.","*indique la proie a ses compagnons d un signe sombre de la tete.*"}},
@@ -27,5 +37,9 @@ addon.localeData.frFR.racial = {
     Troll = {
         HUNTERS_MARK = {ziel={"Je te vois, %s. La chasse finit quand je le decide.","Continue de courir, %s. Ca rend la chasse plus amusante.","*observe %s avec un sourire de travers et memorise chaque mouvement.*"},gruppe={"Voila notre proie. Ouvrez les yeux.","*indique brievement la cible marquee du doigt.*"}},
         TRACKING = {ziel={"Ta piste est fraiche, %s. La nature te trahit.","La jungle cache beaucoup de choses, %s, mais pas ton odeur.","*hume l air et retrouve la piste de %s parmi les odeurs de la jungle.*"},gruppe={"La piste passe par ici. La jungle ne peut pas tout cacher.","*hume l air et suit une piste entre feuillage et terre humide.*"}},
+    },
+
+    Nightelf = {
+        
     },
 }
