@@ -25,6 +25,7 @@ function addon.TryText(key)
         return false
     end
 
+    if addon.FlushPendingAmbient and addon.FlushPendingAmbient() then return true end
     key = key:upper()
     local text = addon.BuildText(key)
     if not text then
@@ -51,6 +52,7 @@ eventFrame:SetScript("OnEvent", function()
     local _, class = UnitClass("player")
     addon.isHunter = class == "HUNTER"
     addon.ready = true
+    addon.StartAmbientSystem()
     addon.Notify("geladen. Befehle: /jrp und /jaegerrp.")
     if not addon.isHunter then
         addon.Notify("Kein Jaeger: Einstellungen verfuegbar, RP-Ausgabe deaktiviert.")

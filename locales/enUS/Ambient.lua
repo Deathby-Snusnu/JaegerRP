@@ -1,0 +1,67 @@
+-- SPDX-License-Identifier: CC-BY-SA-4.0
+-- Copyright (c) 2026 Hannes Weichselbaum
+-- Role-playing text: CC BY-SA 4.0.
+local _, addon = ...
+
+addon.localeData.enUS.ambient = {
+    PET = {
+        "*checks on the comfort of the animal companion.*",
+        "A good companion is worth more than a bag of gold.",
+        "*makes sure the animal has fresh water.*",
+        "A loyal companion deserves food first, praise second.",
+        "*listens carefully to the breathing of their companion.*",
+        "Sometimes my companion understands more than a captain.",
+        "*removes a small thorn from the animal's fur.*",
+        "We hunt together. We rest together. That is how it should be.",
+        "My companion has the better nose. I have the map.",
+        "*carefully checks the companion's fur.*",
+    },
+    WEAPON = {
+        "*inspects the bowstring and arrow fletching.*",
+        "*carefully cleans the barrel of the firearm.*",
+        "A good shot needs no boasting.",
+        "*checks an arrow's fletching and returns it to the quiver.*",
+        "*wipes dust from the firearm and inspects the barrel in the light.*",
+        "Bow or rifle, patience strikes truer than haste.",
+        "*carefully tests the tension of the bowstring.*",
+        "A fine weapon needs care. A steady hand needs practice.",
+        "The finest shot is the one you never had to rush.",
+        "*checks the mechanism of the firearm.*",
+    },
+    TRACKING = {
+        "*studies the earth for fresh tracks.*",
+        "The wind has shifted. Someone passed before us.",
+        "Tracks rarely lie. Their readers sometimes do.",
+        "*kneels and measures the distance between two tracks.*",
+        "Fresh soil, bent grass. Someone passed through recently.",
+        "*lifts a leaf and examines its damp underside.*",
+        "Read the tracks first. The stories can wait.",
+        "When the birds go quiet, I listen more closely.",
+        "If you follow the wind, you must know when it turns.",
+        "*studies a broken twig and nods thoughtfully.*",
+    },
+    CAMP = {
+        "*checks supplies for the next march.*",
+        "Stories come easier by a campfire.",
+        "*looks for a sheltered place to rest.*",
+        "*sets a cooking pot securely over the embers.*",
+        "One more dry log and we can eat.",
+        "*arranges blankets and equipment for the night.*",
+        "The fire keeps us warm. The watch keeps us safe.",
+        "A hot meal can lift even the weariest spirits.",
+        "*sets down a waterskin and checks the water supply.*",
+        "*looks for a sheltered place to rest.*",
+    },
+    WILDERNESS = {
+        "*listens to the sounds of the wild.*",
+        "Even silence has its own voice here.",
+        "*checks the direction of the wind.*",
+        "The forest never speaks loudly. It has no need to.",
+        "*stops and listens to a distant call.*",
+        "You can lose your bearings without losing your way.",
+        "*runs a hand over the bark of an old tree.*",
+        "A quiet morning promises nothing about the evening.",
+        "Out here, the smallest things reveal the greatest secrets.",
+        "*checks the direction of the wind out of habit.*",
+    },
+}

@@ -90,3 +90,11 @@ Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 - Eigene Textpools fuer Jaegerfaehigkeiten, Begleiter und Fallen sowie
   Textschluessel fuer Aspekte des Falken, Geparden und Affen.
 - Konfigurierbarer Chatkanal, Charaktereinstellungen und Regressionstests.
+
+## Ambient-Erweiterung (21.10.2026)
+
+Klassen- und rassenspezifisches, dreisprachiges Ambient-System; Konfiguration mit `/jrp ambient`. Details in `AMBIENT.md`.
+
+## Ambient-Textausbau (21.10.2026)
+
+- Sechs neue Varianten je allgemeiner Kategorie und weitere Rassentexte; Dwarf/PET neu. Keine Aenderung an den Ambient-Triggern oder SavedVariables.

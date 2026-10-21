@@ -1,0 +1,67 @@
+-- SPDX-License-Identifier: CC-BY-SA-4.0
+-- Copyright (c) 2026 Hannes Weichselbaum
+-- Role-playing text: CC BY-SA 4.0.
+local _, addon = ...
+
+addon.localeData.frFR.ambient = {
+    PET = {
+        "*veille au bien-etre de son compagnon animal.*",
+        "Un bon compagnon vaut plus qu un sac d or.",
+        "*verifie que son compagnon a de l eau fraiche.*",
+        "Un compagnon fidele merite d'abord a manger, puis des eloges.",
+        "*ecoute attentivement la respiration de son compagnon.*",
+        "Parfois, mon compagnon comprend mieux les choses qu'un capitaine.",
+        "*retire une petite epine du pelage de l'animal.*",
+        "Nous chassons ensemble. Nous nous reposons ensemble. C'est ainsi que cela doit etre.",
+        "Mon compagnon a le meilleur flair. Moi, j'ai la carte.",
+        "*examine avec soin le pelage de son compagnon.*",
+    },
+    WEAPON = {
+        "*examine la corde de son arc et ses fleches.*",
+        "*nettoie soigneusement le canon de son arme a feu.*",
+        "Un bon tir n a pas besoin de fanfaronnade.",
+        "*verifie les plumes d'une fleche et la remet dans le carquois.*",
+        "*essuie la poussiere de son arme a feu et examine le canon a la lumiere.*",
+        "Arc ou fusil, la patience vise mieux que la precipitation.",
+        "*teste avec precaution la tension de la corde de son arc.*",
+        "Une bonne arme demande de l'entretien. Une main sure demande de l'exercice.",
+        "Le meilleur tir est celui qu'on n'a pas eu besoin de precipiter.",
+        "*verifie le mecanisme de son arme a feu.*",
+    },
+    TRACKING = {
+        "*cherche des traces fraiches dans la terre.*",
+        "Le vent tourne. Quelqu un est passe avant nous.",
+        "Les traces mentent rarement, leurs lecteurs parfois.",
+        "*s'agenouille et mesure l'ecart entre deux traces.*",
+        "Terre fraiche, herbe pliee. Quelqu'un est passe recemment.",
+        "*souleve une feuille et examine sa face encore humide.*",
+        "Lis d'abord les traces. Les histoires attendront.",
+        "Quand les oiseaux se taisent, j'ecoute plus attentivement.",
+        "Quand on suit le vent, il faut savoir quand il tourne.",
+        "*observe une brindille cassee et hoche la tete pensivement.*",
+    },
+    CAMP = {
+        "*verifie les provisions pour la prochaine marche.*",
+        "Pres du feu, les histoires viennent plus facilement.",
+        "*cherche un endroit abrite pour la halte.*",
+        "*place une marmite bien stable au-dessus des braises.*",
+        "Encore une buche seche, et nous pourrons manger.",
+        "*dispose couvertures et equipement pour la nuit.*",
+        "Le feu nous rechauffe. La garde veille sur notre securite.",
+        "Un repas chaud remonte meme le moral le plus fatigue.",
+        "*pose une gourde et verifie les reserves d'eau.*",
+        "*cherche un endroit abrite du vent pour se reposer.*",
+    },
+    WILDERNESS = {
+        "*ecoute les bruits de la nature.*",
+        "Ici, meme le silence a sa voix.",
+        "*observe la direction du vent.*",
+        "La foret ne parle jamais fort. Elle n'en a pas besoin.",
+        "*s'arrete et ecoute un appel lointain.*",
+        "On peut perdre ses reperes sans perdre son chemin.",
+        "*passe une main sur l'ecorce d'un vieil arbre.*",
+        "Un matin paisible ne promet pas une soiree tranquille.",
+        "Ici, les plus petites choses revelent les plus grands secrets.",
+        "*verifie la direction du vent par habitude.*",
+    },
+}

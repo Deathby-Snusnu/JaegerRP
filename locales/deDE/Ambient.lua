@@ -1,0 +1,67 @@
+-- SPDX-License-Identifier: CC-BY-SA-4.0
+-- Copyright (c) 2026 Hannes Weichselbaum
+-- Role-playing text: CC BY-SA 4.0.
+local _, addon = ...
+
+addon.localeData.deDE.ambient = {
+    PET = {
+        "*sieht nach dem Wohlbefinden seines Tiergefaehrten.*",
+        "Ein guter Gefaehrte ist mehr wert als ein Beutel voller Gold.",
+        "*prueft, ob dem Tier frisches Wasser zur Verfuegung steht.*",
+        "*kontrolliert vorsichtig das Fell seines Begleiters.*",
+        "Ein treuer Begleiter verdient zuerst Futter, dann Lob.",
+        "*lauscht aufmerksam auf die Atemzuege seines Begleiters.*",
+        "Manchmal versteht mein Gefaehrte mehr als mancher Hauptmann.",
+        "*entfernt einen kleinen Dorn aus dem Fell des Tieres.*",
+        "Wir jagen zusammen. Wir ruhen zusammen. So gehoert sich das.",
+        "Mein Begleiter hat die bessere Nase. Ich habe die Karte.",
+    },
+    WEAPON = {
+        "*prueft die Sehne des Bogens und die Befiederung der Pfeile.*",
+        "*reinigt sorgfaeltig den Lauf der Schusswaffe.*",
+        "Ein schlechter Schuss verraet den Jaeger. Ein guter braucht keine Worte.",
+        "*prueft den Verschluss seiner Schusswaffe.*",
+        "*kontrolliert die Befiederung eines Pfeils und legt ihn zurueck in den Koecher.*",
+        "*wischt Staub von der Schusswaffe und betrachtet den Lauf im Licht.*",
+        "Ob Bogen oder Buechse: Geduld trifft besser als Eile.",
+        "*testet vorsichtig den Zug der Bogensehne.*",
+        "Eine gute Waffe braucht Pflege. Eine ruhige Hand braucht Uebung.",
+        "Der beste Schuss ist der, den man nicht ueberstuerzen musste.",
+    },
+    TRACKING = {
+        "*untersucht die Erde auf frische Spuren.*",
+        "Der Wind dreht. Jemand war vor uns hier.",
+        "*betrachtet einen geknickten Zweig und nickt nachdenklich.*",
+        "Spuren luegen selten. Wer sie liest, manchmal schon.",
+        "*kniet nieder und misst den Abstand zweier Fussspuren.*",
+        "Frische Erde, gebrochener Halm. Hier ging erst kuerzlich jemand vorbei.",
+        "*hebt ein Blatt auf und betrachtet die feuchte Unterseite.*",
+        "Lies zuerst die Spuren. Die Geschichten kommen spaeter.",
+        "Wenn die Voegel schweigen, hoere ich genauer hin.",
+        "Wer dem Wind folgt, muss wissen, wann er dreht.",
+    },
+    CAMP = {
+        "*kontrolliert die Vorraete fuer den naechsten Marsch.*",
+        "Am Feuer redet es sich leichter als auf der Pirsch.",
+        "*sucht eine windgeschuetzte Stelle fuer eine Rast.*",
+        "Ein Lager ohne trockenen Zunder ist eine traurige Angelegenheit.",
+        "*stellt einen Topf sicher auf die Glut.*",
+        "Noch ein trockenes Holzscheit, dann koennen wir essen.",
+        "*ordnet Decken und Ausruestung fuer die Nacht.*",
+        "Das Feuer waermt. Die Wache sorgt dafuer, dass es so bleibt.",
+        "Eine warme Mahlzeit hebt selbst die muedeste Laune.",
+        "*stellt eine Feldflasche bereit und kontrolliert den Wasservorrat.*",
+    },
+    WILDERNESS = {
+        "*lauscht den Geraeuschen der Wildnis.*",
+        "Die Stille hier hat ihren eigenen Klang.",
+        "*prueft aus Gewohnheit die Windrichtung.*",
+        "Manchmal ist die beste Spur die, die man nicht hinterlaesst.",
+        "Der Wald spricht nicht laut. Das muss er auch nicht.",
+        "*bleibt stehen und lauscht einem fernen Ruf.*",
+        "Man kann sich verirren, ohne den Weg zu verlieren.",
+        "*streicht ueber die Rinde eines alten Baumes.*",
+        "Ein ruhiger Morgen ist kein Versprechen fuer einen ruhigen Abend.",
+        "Hier draussen verraten kleine Dinge die groessten Geheimnisse.",
+    },
+}
