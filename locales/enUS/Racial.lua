@@ -22,7 +22,11 @@ addon.localeData.enUS.racial = {
         },
     
         RAPTOR_STRIKE = {
-            ziel = { "Neuer RP-Text", },
+            ziel = {
+                "Even the forest's claws are sharp, %s.",
+                "A hunter perceives more than mere distance, %s!",
+                "The wilds also teach us to fight at close quarters, %s.",
+            },
             gruppe = { "Neuer RP-Text", },
         },
     },
