@@ -2,15 +2,20 @@
 
 Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 
-## [Unreleased]
+## [0.5.0] - 2026-10-26
 
 ### Dokumentation
 
 - TOC-Version, Selbst-/Begleiterziele, strukturierte Textauswahl,
   persoenlicher Fallback und gemeinsame Dokumentationsverweise aktualisiert.
 
-### Geaendert
+### Hinzugefuegt
+- Dynamische Schluessellisten mit `/jrp list`, `/jrp list racial` und
+  `/jrp list all` ergaenzt.
+- Zusaetzliche englische und franzoesische Rollenspieltexte fuer
+  `RAPTOR_STRIKE` ergaenzt.
 
+### Geaendert
 - Zielaufloesung unterscheidet aktuelle Ziele, Selbst- und
   Begleiterfaehigkeiten. Selbstfaehigkeiten verwenden keinen Zielnamen;
   MEND_PET, REVIVE_PET und FEED_PET verwenden nur den Begleiter.

@@ -110,7 +110,9 @@ immer als `/me` ausgegeben.
 | Befehl | Funktion |
 | --- | --- |
 | `/jrp` oder `/jrp help` | Hilfe anzeigen |
-| `/jrp list` | Verfügbare Textschlüssel auflisten |
+| `/jrp list` | Für den Charakter verwendbare Textschlüssel auflisten |
+| `/jrp list racial` | Schlüssel des aktuellen Volks auflisten |
+| `/jrp list all` | Rassen- und klassenspezifische Schlüssel mit Herkunft auflisten |
 | `/jrp <schluessel>` | Einen RP-Text versuchen |
 | `/jrp status` | Einstellungen anzeigen |
 | `/jrp chance <0-100>` | Textchance als ganze Zahl setzen |
@@ -200,7 +202,9 @@ JaegerRP_CharacterDB.personalTexts.TEST = {
 
 Nutzbare eigene Texte haben Vorrang; andernfalls wird der Locale-Pool versucht.
 Es dürfen auch eigene neue Textschlüssel angelegt werden; `/jrp list` zeigt sie
-zusammen mit den eingebauten Schlüsseln an.
+zusammen mit den eingebauten Schlüsseln an. Die Varianten `list racial` und
+`list all` sind in [Dynamische RP-Textschlüssellisten](../../docs/LISTEN-HANDBUCH.md)
+beschrieben.
 
 Nach Platzhalterersetzung und dem Entfernen einer eventuellen Emote-Markierung
 sind maximal 255 Bytes erlaubt. Zeilenumbrüche und `|`-Chatmarkierungen werden
@@ -258,7 +262,7 @@ Er ersetzt keinen Test im WoW-Client.
 
 ## Kompatibilität
 
-Die TOC deklariert Interface `16001` und Version `0.4.0`. Dies belegt keine
+Die TOC deklariert Interface `16001` und Version `0.5.0`. Dies belegt keine
 Kompatibilität mit anderen Clientversionen; ein Ingame-Test bleibt erforderlich.
 
 Für Chat-Ausgaben wird `C_ChatInfo.SendChatMessage` benötigt. Ein Client
