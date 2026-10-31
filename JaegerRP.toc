@@ -4,6 +4,7 @@
 ## Author: Hannes
 ## Version: 0.5.1
 ## SavedVariablesPerCharacter: JaegerRP_CharacterDB
+## OptionalDeps: RPChatMod
 
 config\Settings.lua
 locales\Init.lua
