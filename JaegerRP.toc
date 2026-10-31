@@ -2,7 +2,7 @@
 ## Title: Jaeger RP
 ## Notes: Rollenspieltexte fuer Jaeger und ihre Begleiter
 ## Author: Hannes
-## Version: 0.5.0
+## Version: 0.5.1
 ## SavedVariablesPerCharacter: JaegerRP_CharacterDB
 
 config\Settings.lua

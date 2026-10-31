@@ -25,6 +25,10 @@ Jägertexte verwendet.
 [Texteditor und Handbuch](../../docs/RPTextStudio/HANDBUCH.md) ·
 [Verpackung und gemeinsame Tests](../../docs/VERPACKUNG.md)
 
+Die gemeinsamen relativen Links setzen den vollständigen Sammlungs-Checkout
+voraus. Im einzelnen AddOn-Repository sind die Anleitungen über das
+[Sammlungsrepository](https://github.com/Deathby-Snusnu/RPAddOns) erreichbar.
+
 ## Installation
 
 Den Ordner `JaegerRP` in das `Interface\AddOns`-Verzeichnis des WoW-Clients
@@ -262,7 +266,7 @@ Er ersetzt keinen Test im WoW-Client.
 
 ## Kompatibilität
 
-Die TOC deklariert Interface `16001` und Version `0.5.0`. Dies belegt keine
+Die TOC deklariert Interface `16001` und Version `0.5.1`. Dies belegt keine
 Kompatibilität mit anderen Clientversionen; ein Ingame-Test bleibt erforderlich.
 
 Für Chat-Ausgaben wird `C_ChatInfo.SendChatMessage` benötigt. Ein Client

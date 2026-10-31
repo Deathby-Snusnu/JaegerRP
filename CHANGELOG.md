@@ -2,6 +2,11 @@
 
 Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 
+## Aktueller Quellstand: 0.5.1 (unveroeffentlicht)
+
+- Versionsangabe aktualisiert und gemeinsame Dokumentationslinks fuer
+  einzelne AddOn-Checkouts erlaeutert.
+
 ## [0.5.0] - 2026-10-26
 
 ### Dokumentation
