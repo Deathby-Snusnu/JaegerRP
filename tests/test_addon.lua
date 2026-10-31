@@ -99,8 +99,10 @@ local function newClient(options)
                 check(event == "PLAYER_LOGIN", "registers login only")
             end,
             SetScript = function(_, name, handler)
-                check(name == "OnEvent", "sets login handler")
-                state.login = handler
+                check(name == "OnEvent" or name == "OnUpdate", "sets supported handler")
+                if name == "OnEvent" then
+                    state.login = handler
+                end
             end,
         }
     end
@@ -139,6 +141,76 @@ check(client.env.JaegerRP_CharacterDB.textChance == 30, "default chance")
 check(client.env.JaegerRP_CharacterDB.cooldown == 20, "default cooldown")
 check(client.env.JaegerRP_CharacterDB.chatChannel == "SAY", "default channel")
 check(client.env.JaegerRP == client.addon, "public API")
+
+-- RPChatMod kann SAY/YELL eine gemeinsame Sprache vorgeben.
+local resolverCalls = {}
+local resolverClient = newClient({
+    race = "Human",
+    db = {
+        textChance = 100,
+        cooldown = 0,
+        chatChannel = "SAY",
+        personalTexts = {},
+    },
+})
+resolverClient.env.RPChatMod = {
+    GetChatLanguageID = function(channel)
+        resolverCalls[#resolverCalls + 1] = channel
+        return 42
+    end,
+}
+
+check(resolverClient.addon.SendText("Gemeinsame Sprache."),
+    "shared resolver SAY succeeds")
+check(resolverClient.messages[#resolverClient.messages].channel == "SAY",
+    "shared resolver SAY keeps its channel")
+check(resolverClient.messages[#resolverClient.messages].language == 42,
+    "shared resolver language is forwarded for SAY")
+check(resolverCalls[#resolverCalls] == "SAY",
+    "shared resolver receives SAY channel")
+
+resolverClient.env.JaegerRP_CharacterDB.chatChannel = "YELL"
+check(resolverClient.addon.SendText("Gemeinsame Sprache!"),
+    "shared resolver YELL succeeds")
+check(resolverClient.messages[#resolverClient.messages].channel == "YELL",
+    "shared resolver YELL keeps its channel")
+check(resolverClient.messages[#resolverClient.messages].language == 42,
+    "shared resolver language is forwarded for YELL")
+check(resolverCalls[#resolverCalls] == "YELL",
+    "shared resolver receives YELL channel")
+
+resolverClient.group = true
+resolverClient.raid = true
+resolverClient.instance = true
+for _, channel in ipairs({ "PARTY", "RAID", "INSTANCE_CHAT" }) do
+    resolverClient.env.JaegerRP_CharacterDB.chatChannel = channel
+    local callsBefore = #resolverCalls
+    check(resolverClient.addon.SendText("Gruppennachricht."),
+        channel .. " succeeds without the shared resolver")
+    check(#resolverCalls == callsBefore,
+        channel .. " bypasses the shared resolver")
+    check(resolverClient.messages[#resolverClient.messages].channel == channel,
+        channel .. " keeps its channel")
+    check(resolverClient.messages[#resolverClient.messages].language == nil,
+        channel .. " has no language id")
+end
+
+local callsBeforeEmote = #resolverCalls
+check(resolverClient.addon.SendText("*winkt.*"),
+    "EMOTE succeeds without the shared resolver")
+check(#resolverCalls == callsBeforeEmote,
+    "EMOTE bypasses the shared resolver")
+check(resolverClient.messages[#resolverClient.messages].channel == "EMOTE",
+    "EMOTE keeps its channel")
+check(resolverClient.messages[#resolverClient.messages].language == nil,
+    "EMOTE has no language id")
+
+resolverClient.env.RPChatMod = nil
+resolverClient.env.JaegerRP_CharacterDB.chatChannel = "SAY"
+check(resolverClient.addon.SendText("Rassensprache."),
+    "SAY succeeds without the shared resolver")
+check(resolverClient.messages[#resolverClient.messages].language == 7,
+    "missing resolver falls back to known racial language")
 
 -- Rassentexte werden vor den allgemeinen Texten gewaehlt.
 local dwarfHunter = newClient({ race = "Dwarf" })
