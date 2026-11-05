@@ -218,7 +218,7 @@ dwarfHunter.command("chance 100")
 dwarfHunter.command("cooldown 0")
 dwarfHunter.target = "Faehrte"
 local dwarfText = dwarfHunter.addon.BuildText("TRACKING")
-local dwarfChoices = dwarfHunter.addon.racial.Dwarf.TRACKING.ziel
+local dwarfChoices = dwarfHunter.addon.racial.Dwarf.TRACKING.gruppe
 local isDwarfText = false
 for _, text in ipairs(dwarfChoices) do
     if text:gsub("%%s", function() return "Faehrte" end) == dwarfText then
@@ -232,7 +232,7 @@ check(isDwarfText, "race-specific text is selected before general text (actual="
 local fallbackHunter = newClient({ race = "Human" })
 fallbackHunter.target = "Faehrte"
 local fallbackText = fallbackHunter.addon.BuildText("TRACKING")
-local generalChoices = fallbackHunter.addon.texts.TRACKING.ziel
+local generalChoices = fallbackHunter.addon.texts.TRACKING.gruppe
 local isGeneralText = false
 for _, text in ipairs(generalChoices) do
     if text:gsub("%%s", function() return "Faehrte" end) == fallbackText then
@@ -244,18 +244,18 @@ check(isGeneralText, "missing racial text falls back to general text")
 
 -- Eigene Texte haben Vorrang vor Rassentexten.
 dwarfHunter.env.JaegerRP_CharacterDB.personalTexts.TRACKING = {
-    "Eigene Spur fuer %s.",
+    "*prueft das Gelaende auf Spuren.*",
 }
-check(dwarfHunter.addon.BuildText("TRACKING") == "Eigene Spur fuer Faehrte.",
+check(dwarfHunter.addon.BuildText("TRACKING") == "*prueft das Gelaende auf Spuren.*",
     "personal text overrides racial text")
 
 -- Scourge verwendet dieselben Rassentexte wie Undead.
 local undeadHunter = newClient({ race = "Scourge" })
 undeadHunter.target = "Spur"
 undeadHunter.addon.racial.Undead = {
-    TRACKING = { ziel = { "Untote Spur fuer %s." } },
+    TRACKING = { gruppe = { "Untote Spur gesucht." } },
 }
-check(undeadHunter.addon.BuildText("TRACKING") == "Untote Spur fuer Spur.",
+check(undeadHunter.addon.BuildText("TRACKING") == "Untote Spur gesucht.",
     "Scourge race name aliases to Undead")
 
 -- Fuer deterministische Texttests eigene Texte verwenden.
