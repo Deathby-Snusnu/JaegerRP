@@ -17,7 +17,8 @@ function addon.StylizeRacialText(lang, race, key, line)
     if line:sub(1, 1) == "*" and line:sub(-1) == "*" then
         candidates = tone.actions
         if type(candidates) ~= "table" or #candidates == 0 then return line end
-        local combined = "*" .. candidates[math.random(#candidates)] .. line:sub(2)
+        local action = candidates[math.random(#candidates)]:gsub("%s+$", "")
+        local combined = "*" .. action .. " " .. line:sub(2)
         if #combined <= 245 and not combined:find("|", 1, true) then
             return combined
         end

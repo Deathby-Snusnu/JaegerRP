@@ -531,7 +531,7 @@ for _, entry in ipairs(races) do
             local line = hunter.addon.BuildAmbient(name)
             check(type(line) == "string" and #line > 3 and #line <= 255,
                 lang .. " ambient category " .. entry[2] .. "/" .. name)
-            check(not line:find("%%s",1,true) and not line:find("%%p",1,true),
+            check(not line:find("%s",1,true) and not line:find("%p",1,true),
                 "ambient never leaks placeholders")
         end
         for _, key in ipairs({"AUTO_SHOT","LACERATE","MEND_PET",
@@ -542,6 +542,15 @@ for _, entry in ipairs(races) do
         end
     end
 end
+
+local actionHunter = newClient({race="Human"})
+local originalRandom = math.random
+math.random = function() return 2 end
+local actionLine = actionHunter.addon.StylizeRacialText(
+    "enUS", "Human", "AUTO_SHOT", "*fires a shot.*")
+math.random = originalRandom
+check(actionLine == "*checks the companions' positions and fires a shot.*",
+    "racial action emotes include a separator")
 
 -- Skyborne-Fallback ohne ID: Fraktion genügt; unbekannte Fraktion bleibt neutral.
 check(newClient({race="Skyborne", faction="Alliance"}).addon.GetPlayerRaceToken()
@@ -559,7 +568,7 @@ for key, meta in pairs(friendlyTarget.addon.hunterSpellbook) do
         or meta.mode == "TRACK" or meta.mode == "AREA" then
         local line = friendlyTarget.addon.BuildText(key)
         check(not line:find("UNIQUE_FRIEND_TARGET_98765",1,true), key .. " cannot target friendly unit")
-        check(not line:find("%%s",1,true), key .. " does not leak format markers")
+        check(not line:find("%s",1,true), key .. " does not leak format markers")
     end
 end
 
@@ -575,6 +584,7 @@ check(personalHunter.addon.BuildText("SNIPER_SHOT")
 -- Ambient wird niemals durch einen Timer direkt verschickt.
 local quietHunter = newClient({race="Dwarf"})
 quietHunter.command("ambient on")
+quietHunter.env.JaegerRP_CharacterDB.ambientChance = 100
 local sentBefore = #quietHunter.messages
 check(quietHunter.addon.QueueAmbient("WEATHER"), "ambient may queue WEATHER")
 check(#quietHunter.messages == sentBefore, "ambient scheduling never sends chat")
