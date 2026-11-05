@@ -23,6 +23,10 @@ local function newClient(options)
         messages = {},
         notices = {},
         race = options.race or "Human",
+        raceId = options.raceId,
+        localizedRace = options.localizedRace or "race",
+        faction = options.faction,
+        pet = options.pet,
         class = options.class or "HUNTER",
         target = nil,
         group = false,
@@ -51,14 +55,24 @@ local function newClient(options)
     end
 
     env.UnitRace = function()
-        return "race", state.race
+        return state.localizedRace, state.race, state.raceId
     end
 
-    env.UnitExists = function()
+    env.UnitFactionGroup = function()
+        return state.faction
+    end
+
+    env.UnitCanAttack = function()
+        return options.hostile ~= false
+    end
+
+    env.UnitExists = function(unit)
+        if unit == "pet" then return state.pet ~= nil end
         return state.target ~= nil
     end
 
-    env.UnitName = function()
+    env.UnitName = function(unit)
+        if unit == "pet" then return state.pet end
         return state.target
     end
 
@@ -235,12 +249,13 @@ local fallbackText = fallbackHunter.addon.BuildText("TRACKING")
 local generalChoices = fallbackHunter.addon.texts.TRACKING.gruppe
 local isGeneralText = false
 for _, text in ipairs(generalChoices) do
-    if text:gsub("%%s", function() return "Faehrte" end) == fallbackText then
+    local body = text:sub(1, 1) == "*" and text:sub(2, -2) or text
+    if fallbackText:find(body, 1, true) then
         isGeneralText = true
         break
     end
 end
-check(isGeneralText, "missing racial text falls back to general text")
+check(isGeneralText, "missing racial literal uses cultural voice with general spell text")
 
 -- Eigene Texte haben Vorrang vor Rassentexten.
 dwarfHunter.env.JaegerRP_CharacterDB.personalTexts.TRACKING = {
@@ -460,5 +475,104 @@ local noChat = newClient({
 })
 check(not noChat.addon.TryText("HUNTERS_MARK") and #noChat.messages == 0,
     "missing chat API is reported and does not send")
+
+
+-- Vollständiger Forever-Jäger-Zauberkatalog in drei Sprachen.
+local spells = newClient({ race = "Human", pet = "Begleiter" })
+spells.command("chance 100")
+spells.command("cooldown 0")
+local catalogCount = 0
+for key, meta in pairs(spells.addon.hunterSpellbook) do
+    catalogCount = catalogCount + 1
+    check(meta.school and meta.mode, "metadata complete: " .. key)
+    for _, lang in ipairs({"deDE", "enUS", "frFR"}) do
+        local data = spells.addon.localeData[lang]
+        local entry = data.texts[key]
+        check(type(entry) == "table" and type(entry.gruppe) == "table"
+            and #entry.gruppe >= 2, lang .. " complete spell pool: " .. key)
+        spells.command("language " .. lang)
+        local line = spells.addon.BuildText(key)
+        check(type(line) == "string" and #line > 3,
+            lang .. " can narrate " .. key)
+        check(#line <= 255, lang .. " speech fits chat limit " .. key)
+    end
+end
+check(catalogCount == 58, "58 unique Forever hunter spells")
+
+-- Die acht spielbaren Jäger-Varianten erhalten einen eigenen Tonfall.
+local races = {
+    {"Human", "Human"}, {"Dwarf", "Dwarf"}, {"NightElf", "NightElf"},
+    {"Orc", "Orc"}, {"Tauren", "Tauren"}, {"Troll", "Troll"},
+    {"Skyborne", "SkyborneHighOrder", 95, "Alliance"},
+    {"Skyborne", "SkyborneWindshaper", 96, "Horde"},
+}
+local categories = {"PET","WEAPON","TRACKING","CAMP","WILDERNESS",
+    "WEATHER","PROVISIONS","TROPHY","BOW","FIREARM","WATCH","TRAVEL"}
+for _, entry in ipairs(races) do
+    local hunter = newClient({
+        race=entry[1], raceId=entry[3], faction=entry[4],
+        pet="Treuer Gefaehrte",
+    })
+    check(hunter.addon.GetPlayerRaceToken() == entry[2],
+        "correct playable hunter race: " .. entry[2])
+    for _, lang in ipairs({"deDE","enUS","frFR"}) do
+        hunter.command("language " .. lang)
+        local voice = hunter.addon.localeData[lang].racialVoices[entry[2]]
+        check(type(voice) == "table", lang .. " voice: " .. entry[2])
+        for _, group in ipairs({"BM","MM","SV","BT"}) do
+            check(type(voice[group]) == "table" and #voice[group] >= 2,
+                lang .. " cultural school " .. group .. " " .. entry[2])
+        end
+        for _, name in ipairs(categories) do
+            local line = hunter.addon.BuildAmbient(name)
+            check(type(line) == "string" and #line > 3 and #line <= 255,
+                lang .. " ambient category " .. entry[2] .. "/" .. name)
+            check(not line:find("%%s",1,true) and not line:find("%%p",1,true),
+                "ambient never leaks placeholders")
+        end
+        for _, key in ipairs({"AUTO_SHOT","LACERATE","MEND_PET",
+                "TRUESHOT_AURA","FEIGN_DEATH","SNIPER_SHOT"}) do
+            local line = hunter.addon.BuildText(key)
+            check(type(line)=="string" and #line <= 255,
+                lang .. " race " .. entry[2] .. " skill " .. key)
+        end
+    end
+end
+
+-- Skyborne-Fallback ohne ID: Fraktion genügt; unbekannte Fraktion bleibt neutral.
+check(newClient({race="Skyborne", faction="Alliance"}).addon.GetPlayerRaceToken()
+    == "SkyborneHighOrder", "Skyborne faction fallback alliance")
+check(newClient({race="Skyborne", faction="Horde"}).addon.GetPlayerRaceToken()
+    == "SkyborneWindshaper", "Skyborne faction fallback horde")
+check(newClient({race="Skyborne"}).addon.GetPlayerRaceToken()
+    == "Skyborne", "Skyborne neutral fallback")
+
+-- Namen freundlicher Ziele dürfen nicht in Feindansprachen erscheinen.
+local friendlyTarget = newClient({race="Human", hostile=false})
+friendlyTarget.target = "Freund"
+for key, meta in pairs(friendlyTarget.addon.hunterSpellbook) do
+    if meta.mode == "ENEMY" or meta.mode == "SELF"
+        or meta.mode == "TRACK" or meta.mode == "AREA" then
+        local line = friendlyTarget.addon.BuildText(key)
+        check(not line:find("Freund",1,true), key .. " cannot target friendly unit")
+        check(not line:find("%%s",1,true), key .. " does not leak format markers")
+    end
+end
+
+-- Ein gültiger eigener Text hat auch bei neuen Schlüsseln Vorrang.
+local personalHunter = newClient({race="Dwarf"})
+personalHunter.env.JaegerRP_CharacterDB.personalTexts.SNIPER_SHOT = {
+    gruppe = {"Eigener Spruch bleibt, genauso wie er geschrieben wurde."},
+}
+check(personalHunter.addon.BuildText("SNIPER_SHOT")
+    == "Eigener Spruch bleibt, genauso wie er geschrieben wurde.",
+    "saved personal text remains unmodified")
+
+-- Ambient wird niemals durch einen Timer direkt verschickt.
+local quietHunter = newClient({race="Dwarf"})
+quietHunter.command("ambient on")
+local sentBefore = #quietHunter.messages
+check(quietHunter.addon.QueueAmbient("WEATHER"), "ambient may queue WEATHER")
+check(#quietHunter.messages == sentBefore, "ambient scheduling never sends chat")
 
 print("PASS: JaegerRP, " .. checks .. " checks")
