@@ -7,7 +7,7 @@ function addon.StylizeRacialText(lang, race, key, line)
     if type(line) ~= "string" or line == "" then return line end
     local locale = addon.localeData[lang] or addon.localeData.deDE
     local voices = locale and locale.racialVoices
-    local tone = voices and (voices[race] or voices.Skyborne)
+    local tone = voices and voices[race]
     if not tone then return line end
 
     local metadata = addon.hunterSpellbook and addon.hunterSpellbook[key]
