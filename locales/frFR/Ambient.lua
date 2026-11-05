@@ -64,4 +64,12 @@ addon.localeData.frFR.ambient = {
         "Ici, les plus petites choses revelent les plus grands secrets.",
         "*verifie la direction du vent par habitude.*",
     },
+    -- Scènes supplémentaires de vie de chasseur
+    WEATHER = { "Le vent tourne. Le gibier l'a remarqué avant nous.", "Je fais plus confiance à la pluie qu'à un guide grognon.", "*frotte une pincée de terre entre ses doigts pour en sentir l'humidité.*", "*observe le vent incliner la pointe des herbes.*", "Un orage ? Parfait. Nous verrons qui était vraiment réveillé." },
+    PROVISIONS = { "Les chasseurs affamés prennent les pires décisions.", "Celui qui cache le dernier morceau de pain peut avouer maintenant.", "*compte les rations tout en surveillant son compagnon.*", "*découpe une petite tranche de viande séchée.*", "Carte, carquois, eau. Ne mangez pas tout dans cet ordre." },
+    TROPHY = { "Un trophée raconte un combat, pas toujours une idée brillante.", "Certains bois méritent un mur, d'autres la forêt.", "*examine une vieille encoche sur son équipement.*", "*regarde un souvenir de chasse avant de se taire un instant.*", "Parfois, le meilleur butin est une histoire incroyable." },
+    BOW = { "Une corde tendue ne pardonne aucune négligence.", "Le bois grince avant de céder. Il suffit d'écouter.", "*vérifie la corde et les encoches à la recherche d'une faille.*", "*fait glisser sa main sur le dos de l'arc.*", "Une bonne corde dit davantage la vérité que bien des promesses." },
+    FIREARM = { "Poudre sèche, yeux ouverts, doigt loin de la détente.", "S'il faut faire du bruit, autant savoir pourquoi.", "*vérifie le mécanisme de son arme avant de la sécuriser.*", "*essuie une petite trace de suie au bout du canon.*", "Un fusil bien entretenu ne jure que pendant le nettoyage." },
+    WATCH = { "Je prends le premier tour de garde. Le deuxième se négocie.", "Tous les bruits ne sont pas des ennemis, mais chacun pose une question.", "*cherche une hauteur offrant une vue dégagée.*", "*s'arrête un instant pour écouter l'obscurité.*", "Qui dort fait confiance. Qui veille mérite du café." },
+    TRAVEL = { "Une longue route n'est qu'une suite de petites décisions.", "La prochaine colline paraît toujours plus proche qu'elle ne l'est.", "*vérifie sangles et boucles avant de partir.*", "*déplie une carte et compare les sentiers aux lignes de crête.*", "Si le chemin semble trop simple, il manque sûrement un bout de carte." },
 }

@@ -16,9 +16,8 @@ addon.localeData.frFR.racial = {
         HUNTERS_MARK = {ziel={"La foret vous a vu, %s. Moi aussi desormais.","Meme l ombre de la lune ne vous cachera pas de la chasse, %s.","*marque la position de %s d un signe silencieux dans la terre humide.*"},gruppe={"Le vent porte leur odeur. La cible est marquee.","*indique silencieusement la cible sans troubler les sous-bois.*"}},
         TRACKING = {ziel={"La foret n a pas perdu votre piste, %s.","Chaque fougere pliee raconte quelque chose, %s.","*suit les signes presque invisibles laisses par %s entre racines et fougeres.*"},gruppe={"La foret revele qui trouble son chemin.","*lit la piste dans l herbe pliee et les feuilles deplacees.*"}},
     
-        SERPENT_STING = {
-            ziel = { "Neuer RP-Text", },
-            gruppe = { "Neuer RP-Text", },
+        SERPENT_STING = { ziel = { "Le plus petit croc de la forêt t'a trouvé, %s.", "Même le serpent patient sait choisir l'instant, %s.", "*pose une flèche empoisonnée sur la corde en visant %s.*" },
+            gruppe = { "Le serpent frappe une fois. Puis il attend.", "Le venin récompense la patience, pas la colère.", "*examine une pointe enduite de poison de la forêt.*", "*détend la corde et observe l'effet depuis les fourrés.*" },
         },
     
         RAPTOR_STRIKE = {
@@ -27,7 +26,7 @@ addon.localeData.frFR.racial = {
                 "Un chasseur ne connaît pas seulement la distance, %s!",
                 "La nature sauvage nous enseigne aussi l'art du combat rapproché, %s.",
             },
-            gruppe = { "Neuer RP-Text", },
+            gruppe = { "Un chasseur acculé garde ses griffes.", "La chasse ne s'arrête pas quand l'ennemi s'approche.", "*pose son arc et saisit son arme de mêlée à deux mains.*", "*adopte une garde stable sous les branches.*" },
         },
     },
     Orc = {
@@ -43,7 +42,4 @@ addon.localeData.frFR.racial = {
         TRACKING = {ziel={"Ta piste est fraiche, %s. La nature te trahit.","La jungle cache beaucoup de choses, %s, mais pas ton odeur.","*hume l air et retrouve la piste de %s parmi les odeurs de la jungle.*"},gruppe={"La piste passe par ici. La jungle ne peut pas tout cacher.","*hume l air et suit une piste entre feuillage et terre humide.*"}},
     },
 
-    Nightelf = {
-        
-    },
 }

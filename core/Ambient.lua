@@ -6,7 +6,8 @@ local _, addon = ...
 local pendingCategory, nextAt
 local elapsed = 0
 local ticker = CreateFrame("Frame")
-local categories = {"PET", "WEAPON", "TRACKING", "CAMP", "WILDERNESS"}
+local categories = {"PET", "WEAPON", "TRACKING", "CAMP", "WILDERNESS",
+    "WEATHER", "PROVISIONS", "TROPHY", "BOW", "FIREARM", "WATCH", "TRAVEL"}
 local function schedule()
     if not addon.db then return end
     local lo = math.max(30, addon.db.ambientMinInterval or 180)
@@ -20,9 +21,14 @@ function addon.BuildAmbient(category)
     local lang = addon.GetOutputLanguage()
     local race = addon.GetPlayerRaceToken and addon.GetPlayerRaceToken() or select(2, UnitRace("player"))
     local pool = addon.GetLocalePoolExact(lang, "ambientRacial", race, category)
-        or addon.GetLocalePoolExact(lang, "ambient", category)
+        or addon.GetLocalePoolExact(lang, "ambientRacialExtra", race, category)
         or addon.GetLocalePoolExact("deDE", "ambientRacial", race, category)
-        or addon.GetLocalePoolExact("deDE", "ambient", category)
+        or addon.GetLocalePoolExact("deDE", "ambientRacialExtra", race, category)
+    local isRacial = pool ~= nil
+    if not pool then
+        pool = addon.GetLocalePoolExact(lang, "ambient", category)
+            or addon.GetLocalePoolExact("deDE", "ambient", category)
+    end
     if not pool or #pool == 0 then return nil end
     local eligible = {}
     for _, line in ipairs(pool) do
@@ -32,7 +38,11 @@ function addon.BuildAmbient(category)
         end
     end
     if #eligible == 0 then return nil end
-    return eligible[math.random(#eligible)]
+    local line = eligible[math.random(#eligible)]
+    if not isRacial and addon.StylizeRacialText then
+        return addon.StylizeRacialText(lang, race, "TRACKING", line)
+    end
+    return line
 end
 function addon.QueueAmbient(category)
     if not addon.ready or not addon.isHunter or not addon.db or not addon.db.ambientEnabled then return false end

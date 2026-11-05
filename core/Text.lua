@@ -41,10 +41,22 @@ local function ChooseText(pool, targetName)
 end
 
 local function ResolveTargetName(key)
-    if SELF_ONLY[key] then return nil end
-    if PET_TARGET[key] then return UnitExists("pet") and UnitName("pet") or nil end
-    if UnitExists("target") then return UnitName("target") end
+    local metadata = addon.hunterSpellbook and addon.hunterSpellbook[key]
+    local mode = metadata and metadata.mode
+    if mode == "SELF" or mode == "TRACK" or mode == "AREA" or SELF_ONLY[key] then
+        return nil
+    end
+    if mode == "PET" or PET_TARGET[key] then
+        return UnitExists("pet") and UnitName("pet") or nil
+    end
+    if not UnitExists("target") then return nil end
+    if mode == "ENEMY" and type(UnitCanAttack) == "function"
+        and not UnitCanAttack("player", "target") then
+        return nil
+    end
+    return UnitName("target")
 end
+
 
 function addon.BuildText(key)
     local targetName = ResolveTargetName(key)
@@ -56,11 +68,20 @@ function addon.BuildText(key)
 
     local race = addon.GetPlayerRaceToken and addon.GetPlayerRaceToken() or select(2, UnitRace("player"))
     local lang = addon.GetOutputLanguage()
-    local pool = addon.GetLocalePoolExact(lang, "racial", race, key)
-        or addon.GetLocalePoolExact(lang, "texts", key)
+    -- Existing custom racial texts stay first. All other spells are
+    -- embellished with the selected race's voice, never overwriting literals.
+    local racial = addon.GetLocalePoolExact(lang, "racial", race, key)
         or addon.GetLocalePoolExact("deDE", "racial", race, key)
+    local special = ChooseText(racial, targetName)
+    if special then return special end
+    local pool = addon.GetLocalePoolExact(lang, "texts", key)
         or addon.GetLocalePoolExact("deDE", "texts", key)
-    return ChooseText(pool, targetName)
+    local line = ChooseText(pool, targetName)
+    if not line then return nil end
+    if addon.StylizeRacialText then
+        return addon.StylizeRacialText(lang, race, key, line)
+    end
+    return line
 end
 
 addon.ChooseStructuredText = ChooseText

@@ -14,10 +14,12 @@ Die Textdaten unterscheiden zwischen gesprochenem RP und Handlungen:
 - die Sternchen dienen nur als Markierung in der Textdatenbank und erscheinen
   nicht im Chat.
 
-Für Jäger der klassischen spielbaren Völker gibt es zusätzlich eigene Texte
-für Jägermarkierung und Fährtensuche. Eigene Charaktertexte haben Vorrang vor
-Rassentexten; wenn kein Rassentext vorhanden ist, werden die allgemeinen
-Jägertexte verwendet.
+Version **0.6.0** deckt die 58 Einträge des Forever-Jäger-Zauberbuchs ab;
+zusätzliche bestehende RP-Schlüssel für Jagdhandlungen bleiben erhalten.
+Jede Fähigkeit hat Texte in Deutsch, Englisch und Französisch. Für acht
+spielbare Jägervarianten gibt es unterschiedliche Sprachstile, einschließlich
+der beiden Himmelsgeborenen-Fraktionen. Eigene Charaktertexte haben immer Vorrang.
+Zusätzlich stehen zwölf Ambient-Kategorien zur Verfügung.
 
 ## Dokumentation
 
@@ -42,6 +44,11 @@ Das Add-on in der Charakterauswahl aktivieren und mit einem Jäger einloggen.
 /jrp list
 /jrp hunters_mark
 /jrp mend_pet
+/jrp serpent_sting
+/jrp concussive_shot
+/jrp freezing_trap
+/jrp sniper_shot
+/jrp ambient test WEATHER
 /jrp status
 /jrp chance 100
 /jrp cooldown 20
@@ -137,49 +144,80 @@ als `/me` ausgegeben werden.
 
 `RAPTOR_STRIKE` (Raptorstoß) steht allen Jägervölkern als allgemeiner Schlüssel zur Verfügung. Nachtelfen behalten ihre eigenen, bevorzugt verwendeten Varianten. Beispiel: `/jrp RAPTOR_STRIKE`.
 
-## Textschlüssel
+## Vollständiger Jäger-Fähigkeitskatalog
 
-| Bereich | Schlüssel |
-| --- | --- |
-| Jägermarkierung | `HUNTERS_MARK` |
-| Fernkampfangriffe | `ARCANE_SHOT`, `AIMED_SHOT`, `MULTI_SHOT`, `STEADY_SHOT`, `RAPID_FIRE` |
-| Begleiter | `KILL_COMMAND`, `MEND_PET`, `REVIVE_PET`, `FEED_PET`, `TAMING` |
-| Fallen und Aufklärung | `TRAP`, `FLARE`, `TRACKING`, `CAMOUFLAGE` |
-| Aspekte und Nahkampf | `ASPECT_HAWK`, `ASPECT_CHEETAH`, `ASPECT_MONKEY`, `DISENGAGE`, `MELEE` |
-| Abschluss | `VICTORY` |
+Die `data/Spellbook.lua` führt die **58 Zauberschlüssel** aus dem aktuellen
+Forever-Jäger-Zauberbuch (Build 1.60.1.70790) mit Ziel-Kategorien. Einige
+Schlüssel stehen nur mit bestimmten Talenten oder auf bestimmten Stufen zur
+Verfügung. RP-Ausgaben wirken keine Spielzauber.
 
-Die Schlüssel sind Textkategorien und keine Prüfung auf Zauber im Client.
-Verfügbarkeit und Namen einzelner Fähigkeiten können je nach WoW-Version
-abweichen.
+| Bereich | RP-Schlüssel |
+|---|---|
+| Tierherrschaft | `TAME_BEAST`, `ASPECT_MONKEY`, `ASPECT_HAWK`, `CALL_PET`, `DISMISS_PET`, `FEED_PET`, `REVIVE_PET`, `MEND_PET`, `EAGLE_EYE`, `EYES_OF_THE_BEAST`, `SCARE_BEAST`, `ASPECT_CHEETAH`, `BEAST_LORE`, `SUMMON_HAWK`, `ASPECT_BEAST`, `ASPECT_PACK`, `ASPECT_WILD`, `TRANQUILIZING_SHOT`, `INTIMIDATION`, `BESTIAL_WRATH` |
+| Treffsicherheit | `AUTO_SHOT`, `SERPENT_STING`, `ARCANE_SHOT`, `HUNTERS_MARK`, `CONCUSSIVE_SHOT`, `DISTRACTING_SHOT`, `MULTI_SHOT`, `AIMED_SHOT`, `SCORPID_STING`, `TRUESHOT_AURA`, `RAPID_FIRE`, `FLARE`, `VIPER_STING`, `SNIPER_SHOT`, `VOLLEY`, `SCATTER_SHOT` |
+| Überleben | `RAPTOR_STRIKE`, `TRACK_BEASTS`, `TRACK_HUMANOIDS`, `WING_CLIP`, `IMMOLATION_TRAP`, `MONGOOSE_BITE`, `TRACK_UNDEAD`, `DISENGAGE`, `FREEZING_TRAP`, `TRACK_HIDDEN`, `COUNTERATTACK`, `TRACK_ELEMENTALS`, `FROST_TRAP`, `FEIGN_DEATH`, `LACERATE`, `TRACK_DEMONS`, `EXPLOSIVE_TRAP`, `TRACK_GIANTS`, `TRACK_DRAGONKIN`, `DETERRENCE`, `STRIDER_KICK` |
+| Tiergefährten-Training | `BEAST_TRAINING` |
 
-`%s` wird durch den für den Schlüssel aufgelösten Namen ersetzt.
-`MEND_PET`, `REVIVE_PET` und `FEED_PET` verwenden ausschließlich den
-vorhandenen Begleiter. Aspekte, `RAPID_FIRE`, `DISENGAGE`, `TRACKING` und
-`CAMOUFLAGE` verwenden keinen Zielnamen. Andere Schlüssel nutzen das aktuelle
-Ziel, sofern vorhanden. Das Add-on wählt kein Spielziel und prüft keinen
-Zaubererfolg.
+Vorhandene zusätzliche RP-Aktionen bleiben: `KILL_COMMAND`, `STEADY_SHOT`,
+`TAMING`, `TRAP`, `MELEE`, `TRACKING`, `CAMOUFLAGE`, `VICTORY`.
+Sie sind keine Behauptung über die Verfügbarkeit in jedem Client.
 
-Mit aufgelöstem Namen wird zuerst `ziel`, danach `gruppe` versucht;
-anschließend sind auch zielunabhängige Einträge aus `ziel` möglich. Ohne Namen
-werden Einträge mit `%s` nicht ausgewählt. `gruppe` setzt keine tatsächliche
-Spielergruppe voraus.
+**Beispiel-Makro für Raptorstoß:**
 
-Die Fernkampftexte sind absichtlich weitgehend waffenneutral formuliert und
-passen damit zu Bogen, Armbrust und Schusswaffe.
+```text
+#showtooltip Raptorstoß
+/cast Raptorstoß
+/jrp RAPTOR_STRIKE
+```
 
-## Rassenspezifische Texte
+**Beispiel-Makro für Erschütternder Schuss:**
 
-`locales/<locale>/Racial.lua` enthält eigene Varianten für `HUNTERS_MARK` und
-`TRACKING` für Zwerge, Nachtelfen, Orcs, Tauren und Trolle. Andere Völker
-verwenden die allgemeinen Textpools. `Scourge` wird wie in den anderen
-Klassen-AddOns als `Undead` behandelt.
+```text
+#showtooltip Erschütternder Schuss
+/cast Erschütternder Schuss
+/jrp CONCUSSIVE_SHOT
+```
 
-Ein nutzbarer persönlicher Text hat Vorrang. Andernfalls wird der erste
-vorhandene Locale-Pool gewählt: Rassentext der Ausgabesprache, allgemeiner
-Text der Ausgabesprache, deutscher Rassentext, deutscher allgemeiner Text.
-Ein vorhandener, aber unbrauchbarer Locale-Pool wird nicht übersprungen.
-Ziel- und Gruppenpools sowie `*...*`-Emotes funktionieren für rassenspezifische
-Texte genauso wie für allgemeine Texte.
+Die deutschen Zaubernamen müssen der Schreibweise im Spielclient entsprechen.
+Ein RP-Schlüssel löst nur den Erzähltext aus, nie selbst einen geschützten Cast.
+`/jrp list` zeigt verfügbare Schlüssel im geladenen AddOn.
+
+### Zielregeln
+
+- **ENEMY:** Gegnersprüche dürfen den Namen eines angreifbaren Ziels verwenden.
+  Freundliche Ziele werden nicht mit feindlichen Sprüchen angesprochen.
+- **TARGET:** neutrales oder gewähltes Ziel etwa bei `TAME_BEAST` und
+  `BEAST_LORE`.
+- **PET:** `MEND_PET`, `FEED_PET`, `REVIVE_PET` und weitere Tieraktionen
+  beziehen sich auf den Begleiter, nie auf einen beliebigen Feind.
+- **SELF, TRACK, AREA:** Aspekte, Fährten, Fallen und Flächensprüche nennen
+  keinen zufälligen Zielnamen.
+
+Nur `%s` wird in passenden Zieltexten eingesetzt. Bei fehlendem Ziel greifen
+die zielunabhängigen `gruppe`-Zeilen. Der Code prüft keinen Cast-Erfolg, wählt
+keine Ziele und versendet keine automatischen RP-Nachrichten.
+
+## Volkstypische Texte
+
+Es gibt acht spielbare Jäger-Varianten: Mensch, Zwerg, Nachtelf, Ork,
+Tauren, Troll sowie die Himmelsgeborenen der Hohen Ordnung (Allianz) und
+Windformer (Horde). Die früheren speziellen Rassentexte unter
+`locales/<locale>/Racial.lua` bleiben erhalten.
+
+Alle weiteren Fähigkeiten bekommen ihren individuellen Zaubertext, ergänzt
+um kulturspezifische Sprach- oder Handlungselemente aus
+`locales/<locale>/Voices.lua`. So bleibt die Aktion erkennbar, ohne dass
+jeder Jäger dieselben Floskeln verwendet.
+
+Die Laufzeit identifiziert Himmelsgeborene über den Rassenwert (95/96) und
+ersatzweise die Fraktion. Falls beide Angaben fehlen, wird der neutrale
+`Skyborne`-Stil verwendet. Andere, nicht definierte Völker fallen auf
+unveränderte allgemeine Texte zurück.
+
+Priorität: **persönliche Texte → vorhandener, spezieller Rassentext →
+allgemeiner Sprachtext mit Volkston → deutscher Fallback**.
+Persönliche `JaegerRP_CharacterDB.personalTexts` und weitere gespeicherte
+Einstellungen werden durch die Erweiterung nicht überschrieben.
 
 ## Eigene Texte
 
@@ -252,7 +290,9 @@ oder 5.4 starten:
 lua tests\test_addon.lua
 ```
 
-Der Test simuliert die benötigten WoW-APIs und prüft unter anderem:
+Der Test simuliert die benötigten WoW-APIs und prüft nun auch alle 58
+Fähigkeiten in drei Sprachen, acht Jägervarianten, zwölf Ambient-Kategorien,
+Zielregeln und den Vorrang persönlicher Texte. Er prüft außerdem:
 
 - Initialisierung und Klassenprüfung,
 - Einstellungen und Kanäle,
@@ -268,7 +308,7 @@ Er ersetzt keinen Test im WoW-Client.
 
 ## Kompatibilität
 
-Die TOC deklariert Interface `16001` und Version `0.5.1`. Dies belegt keine
+Die TOC deklariert Interface `16001` und Version `0.6.0`. Dies belegt keine
 Kompatibilität mit anderen Clientversionen; ein Ingame-Test bleibt erforderlich.
 
 Für Chat-Ausgaben wird `C_ChatInfo.SendChatMessage` benötigt. Ein Client
@@ -281,6 +321,9 @@ ohne diese API wird mit einer Meldung abgewiesen.
 - `config/Settings.lua`: Standardwerte.
 - `core/Database.lua`: Charakterdaten und Validierung.
 - `core/Text.lua`: Auswahl, Zielersetzung und persönliche Textpools.
+- `core/RacialVoices.lua`: Kultursprache für bestehende fähigkeitsspezifische Texte.
+- `core/Ambient.lua`: Ambient-Vormerkung, keine unaufgeforderte Chat-Ausgabe.
+- `data/Spellbook.lua`: zur Laufzeit geladenes Verzeichnis der 58 Fähigkeiten.
 - `core/Chat.lua`: Sprachkanal, Rassensprache und `/me`-Erkennung.
 - `core/Cooldown.lua`: RP-Cooldown.
 - `core/Commands.lua`: `/jrp`-Befehle.
@@ -288,8 +331,9 @@ ohne diese API wird mit einer Meldung abgewiesen.
   RP-Textdaten.
 - `locales/<locale>/Racial.lua`: rassenspezifische Markierungs- und
   Fährtentexte je Sprache.
-- `locales/<locale>/Expansion.lua`: zusätzliche Laufzeittexte; vom
-  Texteditor nicht bearbeitet.
+- `locales/<locale>/Voices.lua`: kulturelle Sprach- und Emote-Varianten.
+- `locales/<locale>/AmbientRacialExtra.lua`: volksspezifische Lager- und Jagdtexte.
+- `locales/<locale>/Expansion.lua`: Legacy-Kompatibilität ohne generische Füllsätze.
 - `tests/test_addon.lua`: Lokaler Regressionstest.
 
 Die Kernmodule verwenden die projektweit einheitlichen Funktionen
@@ -297,8 +341,8 @@ Die Kernmodule verwenden die projektweit einheitlichen Funktionen
 die öffentliche manuelle Schnittstelle; gesprochene Texte und markierte
 `/me`-Handlungen behalten ihre unterschiedlichen Kanäle.
 
-Die Dateien unter `data/` sind nicht in der TOC-Ladefolge enthalten; die
-Laufzeittexte liegen in den Locale-Dateien.
+`data/Spellbook.lua` ist in der TOC enthalten und stellt die Zielmetadaten
+zur Verfügung. Die sichtbaren RP-Formulierungen bleiben in den Locale-Dateien.
 
 ## Lizenz
 

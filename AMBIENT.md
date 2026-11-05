@@ -1,27 +1,45 @@
-# Ambient-System JaegerRP
+# Ambient-System JaegerRP 0.6.0
 
-## Verwendung
+## Bedienung
 
-`/jrp ambient status` zeigt den aktuellen Zustand.
+- `/jrp ambient status`: Einstellungen anzeigen.
+- `/jrp ambient on|off`: aktivieren oder deaktivieren.
+- `/jrp ambient chance 70`: Chance 0–100.
+- `/jrp ambient interval 180 420`: Mindest- und Höchstintervall.
+- `/jrp ambient combat off`: Ambient im Kampf unterdrücken.
+- `/jrp ambient test WEATHER`: manuell eine zufällige Wetterzeile ausgeben.
+- `/jrp ambient test PET`: manuell eine Begleiterzeile ausgeben.
 
-`/jrp ambient on|off` aktiviert/deaktiviert Ambient.
+## Kategorien
 
-`/jrp ambient chance 70` setzt die Wahrscheinlichkeit (0 bis 100).
+`PET`, `WEAPON`, `TRACKING`, `CAMP`, `WILDERNESS`, `WEATHER`,
+`PROVISIONS`, `TROPHY`, `BOW`, `FIREARM`, `WATCH`, `TRAVEL`.
 
-`/jrp ambient interval 180 420` setzt Mindest- und Hoechstintervall in Sekunden.
+12 Kategorien mit individuellen Texten in deDE, enUS, frFR. Die Rassen-
+Erweiterung enthält zusätzlich eigene PET-, CAMP-, TRACKING-, WATCH- und
+WEATHER-Texte für alle acht Jägervarianten. Für die übrigen Kategorien wird
+der allgemeine fähigkeitsbezogene Text passend zum Volkston ergänzt.
 
-`/jrp ambient combat off` unterdrueckt Ambient im Kampf.
+## Sicherheit und Datenhaltung
 
-`/jrp ambient test` gibt bei Spieleraktion eine zufaellige Zeile aus.
+**OnUpdate versendet niemals Nachrichten.** Der Timer merkt nur eine
+Ambient-Kategorie vor. Ein Text wird erst bei einem späteren ausdrücklichen
+`/jrp <SCHLÜSSEL>`-Befehl ausgegeben und teilt sich dessen Cooldown.
+Ein manueller `/jrp ambient test` ist eine bewusste RP-Aktion.
+In Kämpfen kann Ambient unabhängig deaktiviert werden.
 
-Ambient-Zeilen werden vom Timer **nur vorgemerkt** und erst beim naechsten spielergesteuerten `/jrp <SCHLUESSEL>` ausgegeben. Kein Chatversand aus `OnUpdate`. Der gemeinsame RP-Cooldown gilt auch fuer Ambient.
+Reihenfolge für Kategorie und Sprache: vorhandener Rassentext aus
+`AmbientRacial.lua`, zusätzliche Volkstexte aus `AmbientRacialExtra.lua`,
+deutsche Rassentexte als Fallback und schließlich die allgemeinen Ambient-
+Texte in der gewählten Sprache (notfalls Deutsch). Allgemeine Ambient-Texte
+werden im kulturspezifischen Ton formuliert, ohne Namensersetzung.
 
-## Daten und Prioritaeten
+`*...*` markiert `/me`-Handlungen; gesprochene Texte verwenden den
+eingestellten Chatkanal. Textchance, Cooldown, Intervalle und persönliche
+SavedVariables bleiben kompatibel. Vor der Installation Spielordner und
+WTF-Verzeichnis sichern.
 
-`locales/<Sprache>/AmbientRacial.lua` (Rasse+Kategorie), danach `Ambient.lua` (Klasse+Kategorie), danach dieselben beiden Quellen in `deDE`. Die Textsammlung nutzt CC BY-SA 4.0, Code MPL 2.0. `*...*` bezeichnet eine `/me`-Handlung. Keine dynamischen Ziel-/Pet-Platzhalter in diesen Ambient-Pools.
+## Textpflege und Test
 
-Backups vor Installation: AddOn-Ordner und WTF-Verzeichnis sichern.
-
-## Erweiterte Textsammlung
-
-Sechs neue Varianten je allgemeiner Kategorie und weitere Rassentexte; Dwarf/PET neu. Jede Sprachfassung (deDE, enUS, frFR) enthaelt dieselben Kategorien und Variantenanzahlen. Die Lua-Textdateien sind im RP Text Studio bearbeitbar.
+Locale-Dateien sind normale Lua-Textlisten unter CC BY-SA 4.0; Kernfunktionen
+sind MPL-2.0. Regression: `lua tests/test_addon.lua`.

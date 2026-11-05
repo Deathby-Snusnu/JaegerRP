@@ -2,30 +2,38 @@
 ## Title: Jaeger RP
 ## Notes: Rollenspieltexte fuer Jaeger und ihre Begleiter
 ## Author: Hannes
-## Version: 0.5.1
+## Version: 0.6.0
 ## SavedVariablesPerCharacter: JaegerRP_CharacterDB
 ## OptionalDeps: RPChatMod
 
 config\Settings.lua
+data\Spellbook.lua
 locales\Init.lua
 locales\deDE\Texts.lua
 locales\deDE\Racial.lua
+locales\deDE\Voices.lua
 locales\deDE\Ambient.lua
 locales\deDE\AmbientRacial.lua
+locales\deDE\AmbientRacialExtra.lua
 locales\deDE\Expansion.lua
 locales\enUS\Texts.lua
 locales\enUS\Racial.lua
+locales\enUS\Voices.lua
 locales\enUS\Ambient.lua
 locales\enUS\AmbientRacial.lua
+locales\enUS\AmbientRacialExtra.lua
 locales\enUS\Expansion.lua
 locales\frFR\Texts.lua
 locales\frFR\Racial.lua
+locales\frFR\Voices.lua
 locales\frFR\Ambient.lua
 locales\frFR\AmbientRacial.lua
+locales\frFR\AmbientRacialExtra.lua
 locales\frFR\Expansion.lua
 locales\Finalize.lua
 core\Database.lua
 core\Text.lua
+core\RacialVoices.lua
 core\Chat.lua
 core\Cooldown.lua
 core\Ambient.lua

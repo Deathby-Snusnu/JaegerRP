@@ -11,7 +11,19 @@ local _, addon = ...
 function addon.GetPlayerRaceToken()
     local localizedRace, raceToken = UnitRace("player")
     local lowered = type(localizedRace) == "string" and localizedRace:lower() or ""
-    if lowered:find("skyborne", 1, true) or lowered:find("himmelsgebor", 1, true) then
+    local english = type(raceToken) == "string" and raceToken:lower() or ""
+    if lowered:find("skyborne", 1, true) or lowered:find("himmelsgebor", 1, true)
+        or english:find("skyborne", 1, true) then
+        -- WoW Forever identifies both Skyborne factions separately (95/96).
+        -- The faction fallback also works in clients omitting UnitRace ID.
+        local raceId = select(3, UnitRace("player"))
+        if raceId == 95 then return "SkyborneHighOrder" end
+        if raceId == 96 then return "SkyborneWindshaper" end
+        if type(UnitFactionGroup) == "function" then
+            local faction = UnitFactionGroup("player")
+            if faction == "Alliance" then return "SkyborneHighOrder" end
+            if faction == "Horde" then return "SkyborneWindshaper" end
+        end
         return "Skyborne"
     end
     if raceToken == "Scourge" then return "Undead" end

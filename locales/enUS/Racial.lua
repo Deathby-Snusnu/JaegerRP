@@ -16,9 +16,8 @@ addon.localeData.enUS.racial = {
         HUNTERS_MARK = {ziel={"The forest has seen you, %s. Now so have I.","Even moonshadow cannot hide you from the hunt, %s.","*marks %s's position with a silent sign in the damp earth.*"},gruppe={"The wind carries their scent. The target is marked.","*points silently toward the marked target without disturbing the undergrowth.*"}},
         TRACKING = {ziel={"The forest has not lost your trail, %s.","Every bent fern tells a story, %s.","*follows the faint signs %s left among roots and fern.*"},gruppe={"The forest tells who disturbed its path.","*reads the trail in bent grass and shifted leaves.*"}},
     
-        SERPENT_STING = {
-            ziel = { "Neuer RP-Text", },
-            gruppe = { "Neuer RP-Text", },
+        SERPENT_STING = { ziel = { "The forest's smallest fang has found you, %s.", "Even the patient serpent makes its choice, %s.", "*sets a venom-treated arrow against the string and sights on %s.*" },
+            gruppe = { "The serpent strikes once. Then it waits.", "Venom rewards patience more than anger.", "*examines an arrowhead coated in forest poison.*", "*loosens the bowstring and watches the effect from cover.*" },
         },
     
         RAPTOR_STRIKE = {
@@ -27,7 +26,7 @@ addon.localeData.enUS.racial = {
                 "A hunter perceives more than mere distance, %s!",
                 "The wilds also teach us to fight at close quarters, %s.",
             },
-            gruppe = { "Neuer RP-Text", },
+            gruppe = { "A cornered hunter still has claws.", "The hunt does not end when the enemy comes close.", "*sets the bow aside and grips the melee weapon with both hands.*", "*steps into a grounded fighting stance beneath the trees.*" },
         },
     },
     Orc = {
@@ -43,7 +42,4 @@ addon.localeData.enUS.racial = {
         TRACKING = {ziel={"Your trail is fresh, %s. The wilds betray you.","The jungle hides plenty, %s, but not your scent.","*tests the air and finds %s's trail among the jungle scents.*"},gruppe={"The trail goes this way. The jungle cannot hide everything.","*tests the air and follows a trail through leaves and damp earth.*"}},
     },
 
-    Nightelf = {
-        
-    },
 }
