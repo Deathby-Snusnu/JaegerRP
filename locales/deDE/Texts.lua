@@ -312,6 +312,21 @@ addon.localeData.deDE.texts = {
         },
     },
 
+    RAPTOR_STRIKE = {
+        ziel = {
+            "Ihr seid mir zu nahe gekommen, %s. Schlechte Entscheidung.",
+            "*wechselt die Haltung und führt einen entschlossenen Nahkampfhieb gegen %s aus.*",
+            "Ein Jäger trifft auch ohne Abstand, %s.",
+            "*fängt die Bewegung von %s mit der Nahkampfwaffe ab und setzt zum Gegenhieb an.*",
+        },
+        gruppe = {
+            "Ein guter Jäger weiß, wann er die Distanz aufgeben muss.",
+            "*greift zur Nahkampfwaffe und geht in eine stabile Kampfhaltung.*",
+            "Die Jagd hört nicht an der Reichweite der Fernwaffe auf.",
+            "*verlagert das Gewicht nach vorn und setzt zu einem wuchtigen Hieb an.*",
+        },
+    },
+
     TRACKING = {
         ziel = {
             "Ihr wart hier, %s. Und nicht besonders vorsichtig.",

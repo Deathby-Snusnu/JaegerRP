@@ -343,6 +343,29 @@ check(client.env.JaegerRP_CharacterDB.textChance == 100,
 check(client.env.JaegerRP_CharacterDB.cooldown == 0,
     "invalid cooldown rejected")
 
+-- Raptorstoß muss für jedes Volk und alle Sprachen auf allgemeine
+-- Texte zurückfallen, ohne vorhandene Nachtelfen-Rassentexte zu verlieren.
+for _, language in ipairs({"deDE", "enUS", "frFR"}) do
+    local hunter = newClient({race="Dwarf"})
+    hunter.command("language " .. language)
+    hunter.command("chance 100")
+    hunter.command("cooldown 0")
+    hunter.target = "Trainingsziel"
+    check(type(hunter.addon.localeData[language].texts.RAPTOR_STRIKE) == "table",
+        language .. " has general Raptor Strike pool")
+    check(type(hunter.addon.BuildText("RAPTOR_STRIKE")) == "string",
+        language .. " Raptor Strike builds with target")
+    hunter.target = nil
+    check(type(hunter.addon.BuildText("RAPTOR_STRIKE")) == "string",
+        language .. " Raptor Strike builds without target")
+    check(hunter.addon.TryText("RAPTOR_STRIKE"),
+        language .. " Raptor Strike is usable by dwarves")
+    check(#hunter.messages == 1, language .. " Raptor Strike sends exactly once")
+    local nightelf = newClient({race="NightElf"})
+    check(type(nightelf.addon.localeData[language].racial.NightElf.RAPTOR_STRIKE) == "table",
+        language .. " preserves night elf texts")
+end
+
 -- Persoenliche Texte koennen neue Schluessel bereitstellen.
 client.env.JaegerRP_CharacterDB.personalTexts.MY_HUNTER_TEXT = {
     "Eigener Jaegertext.",
