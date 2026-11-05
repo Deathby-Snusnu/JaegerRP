@@ -2,7 +2,16 @@
 
 Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 
-## Aktueller Quellstand: 0.5.1 (unveroeffentlicht)
+## Aktueller Quellstand: 0.6.0 (unveröffentlicht)
+
+- Alle 58 Forever-Jäger-Zauber mit expliziter Zielkategorie versehen; 44 zuvor fehlende allgemeine RP-Schlüssel in deDE, enUS und frFR mit individuellen Ansagen und /me-Emotes ergänzt.
+- Kulturelle Sprachstile für acht spielbare Jägervarianten plus neutralen Skyborne-Fallback eingeführt; die Hohe Ordnung und Windformer verwenden unterschiedliche Stimmen.
+- Sieben zusätzliche Ambient-Kategorien (Wetter, Proviant, Trophäe, Bogen, Schusswaffe, Wache, Reise) und neue volksspezifische Lager-/Begleitertexte ergänzt. Keine Ausgabe durch OnUpdate.
+- Unspezifische automatische Füllsätze in den Expansion-Dateien abgeschaltet. Übrig gebliebene englische und französische Platzhalter für Nachtelfen wurden durch kreative Texte ersetzt.
+- Persönliche Texte, Standardwerte, Chatkanäle und gespeicherte Einstellungen behalten ihren Vorrang. Zielnamen werden nur bei passenden Fähigkeiten verwendet.
+- Vollständige Lua- und Python-Regressionstests für Sprach-/Rassenabdeckung, Ladereihenfolge, Emotes und Zielschutz ergänzt.
+
+## Historischer Quellstand: 0.5.1
 
 - `RAPTOR_STRIKE` als allgemeiner, dreisprachiger Nahkampf-Textpool ergänzt. Die bisher ausschließlich für Nachtelfen vorhandenen Rassentexte bleiben erhalten. Regressionstests prüfen Zwerge mit und ohne Ziel und alle drei Sprachen.
 
