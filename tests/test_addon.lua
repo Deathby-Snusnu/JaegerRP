@@ -66,6 +66,10 @@ local function newClient(options)
         return options.hostile ~= false
     end
 
+    env.UnitAffectingCombat = function()
+        return options.combat == true
+    end
+
     env.UnitExists = function(unit)
         if unit == "pet" then return state.pet ~= nil end
         return state.target ~= nil
