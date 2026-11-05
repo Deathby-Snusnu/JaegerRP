@@ -4,6 +4,8 @@ Aenderungen an JaegerRP werden in dieser Datei dokumentiert.
 
 ## Aktueller Quellstand: 0.5.1 (unveroeffentlicht)
 
+- `RAPTOR_STRIKE` als allgemeiner, dreisprachiger Nahkampf-Textpool ergänzt. Die bisher ausschließlich für Nachtelfen vorhandenen Rassentexte bleiben erhalten. Regressionstests prüfen Zwerge mit und ohne Ziel und alle drei Sprachen.
+
 - Versionsangabe aktualisiert und gemeinsame Dokumentationslinks fuer
   einzelne AddOn-Checkouts erlaeutert.
 

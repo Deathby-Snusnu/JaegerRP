@@ -135,6 +135,8 @@ Reihenfolge. Ein nicht verfügbarer Gruppenkanal wird für gesprochene Texte
 abgelehnt und nicht auf SAY umgeleitet. Ein markiertes Emote kann trotzdem
 als `/me` ausgegeben werden.
 
+`RAPTOR_STRIKE` (Raptorstoß) steht allen Jägervölkern als allgemeiner Schlüssel zur Verfügung. Nachtelfen behalten ihre eigenen, bevorzugt verwendeten Varianten. Beispiel: `/jrp RAPTOR_STRIKE`.
+
 ## Textschlüssel
 
 | Bereich | Schlüssel |

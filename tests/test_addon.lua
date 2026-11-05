@@ -218,24 +218,24 @@ dwarfHunter.command("chance 100")
 dwarfHunter.command("cooldown 0")
 dwarfHunter.target = "Faehrte"
 local dwarfText = dwarfHunter.addon.BuildText("TRACKING")
-local dwarfChoices = dwarfHunter.addon.racial.Dwarf.TRACKING.ziel
+local dwarfChoices = dwarfHunter.addon.racial.Dwarf.TRACKING.gruppe
 local isDwarfText = false
 for _, text in ipairs(dwarfChoices) do
-    if text == dwarfText then
+    if text:gsub("%%s", function() return "Faehrte" end) == dwarfText then
         isDwarfText = true
         break
     end
 end
-check(isDwarfText, "race-specific text is selected before general text")
+check(isDwarfText, "race-specific text is selected before general text (actual=" .. tostring(dwarfText) .. ", racial=" .. table.concat(dwarfChoices, " | ") .. ")")
 
 -- Voelker ohne eigenen Pool verwenden weiterhin allgemeine Jaegertexte.
 local fallbackHunter = newClient({ race = "Human" })
 fallbackHunter.target = "Faehrte"
 local fallbackText = fallbackHunter.addon.BuildText("TRACKING")
-local generalChoices = fallbackHunter.addon.texts.TRACKING.ziel
+local generalChoices = fallbackHunter.addon.texts.TRACKING.gruppe
 local isGeneralText = false
 for _, text in ipairs(generalChoices) do
-    if text == fallbackText then
+    if text:gsub("%%s", function() return "Faehrte" end) == fallbackText then
         isGeneralText = true
         break
     end
@@ -244,18 +244,18 @@ check(isGeneralText, "missing racial text falls back to general text")
 
 -- Eigene Texte haben Vorrang vor Rassentexten.
 dwarfHunter.env.JaegerRP_CharacterDB.personalTexts.TRACKING = {
-    "Eigene Spur fuer %s.",
+    "*prueft das Gelaende auf Spuren.*",
 }
-check(dwarfHunter.addon.BuildText("TRACKING") == "Eigene Spur fuer Faehrte.",
+check(dwarfHunter.addon.BuildText("TRACKING") == "*prueft das Gelaende auf Spuren.*",
     "personal text overrides racial text")
 
 -- Scourge verwendet dieselben Rassentexte wie Undead.
 local undeadHunter = newClient({ race = "Scourge" })
 undeadHunter.target = "Spur"
 undeadHunter.addon.racial.Undead = {
-    TRACKING = { ziel = { "Untote Spur fuer %s." } },
+    TRACKING = { gruppe = { "Untote Spur gesucht." } },
 }
-check(undeadHunter.addon.BuildText("TRACKING") == "Untote Spur fuer Spur.",
+check(undeadHunter.addon.BuildText("TRACKING") == "Untote Spur gesucht.",
     "Scourge race name aliases to Undead")
 
 -- Fuer deterministische Texttests eigene Texte verwenden.
@@ -342,6 +342,29 @@ check(client.env.JaegerRP_CharacterDB.textChance == 100,
     "invalid chance rejected")
 check(client.env.JaegerRP_CharacterDB.cooldown == 0,
     "invalid cooldown rejected")
+
+-- Raptorstoß muss für jedes Volk und alle Sprachen auf allgemeine
+-- Texte zurückfallen, ohne vorhandene Nachtelfen-Rassentexte zu verlieren.
+for _, language in ipairs({"deDE", "enUS", "frFR"}) do
+    local hunter = newClient({race="Dwarf"})
+    hunter.command("language " .. language)
+    hunter.command("chance 100")
+    hunter.command("cooldown 0")
+    hunter.target = "Trainingsziel"
+    check(type(hunter.addon.localeData[language].texts.RAPTOR_STRIKE) == "table",
+        language .. " has general Raptor Strike pool")
+    check(type(hunter.addon.BuildText("RAPTOR_STRIKE")) == "string",
+        language .. " Raptor Strike builds with target")
+    hunter.target = nil
+    check(type(hunter.addon.BuildText("RAPTOR_STRIKE")) == "string",
+        language .. " Raptor Strike builds without target")
+    check(hunter.addon.TryText("RAPTOR_STRIKE"),
+        language .. " Raptor Strike is usable by dwarves")
+    check(#hunter.messages == 1, language .. " Raptor Strike sends exactly once")
+    local nightelf = newClient({race="NightElf"})
+    check(type(nightelf.addon.localeData[language].racial.NightElf.RAPTOR_STRIKE) == "table",
+        language .. " preserves night elf texts")
+end
 
 -- Persoenliche Texte koennen neue Schluessel bereitstellen.
 client.env.JaegerRP_CharacterDB.personalTexts.MY_HUNTER_TEXT = {
