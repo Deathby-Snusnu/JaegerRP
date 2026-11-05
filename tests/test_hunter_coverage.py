@@ -43,8 +43,8 @@ class HunterCoverageTests(unittest.TestCase):
                 extra = (ROOT / "locales" / lang /
                          "AmbientRacialExtra.lua").read_text(encoding="utf-8")
                 for race in RACES:
-                    self.assertRegex(voices, rf'^\s+{race}\s*=\s*\{{')
-                    self.assertRegex(extra, rf'^\s+{race}\s*=\s*\{{')
+                    self.assertRegex(voices, rf'(?m)^\s+{race}\s*=\s*\{{')
+                    self.assertRegex(extra, rf'(?m)^\s+{race}\s*=\s*\{{')
                 ambient = (ROOT / "locales" / lang / "Ambient.lua").read_text(
                     encoding="utf-8")
                 for category in AMBIENT:
