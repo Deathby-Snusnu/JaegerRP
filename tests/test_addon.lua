@@ -221,7 +221,7 @@ local dwarfText = dwarfHunter.addon.BuildText("TRACKING")
 local dwarfChoices = dwarfHunter.addon.racial.Dwarf.TRACKING.ziel
 local isDwarfText = false
 for _, text in ipairs(dwarfChoices) do
-    if text == dwarfText then
+    if text:gsub("%%s", function() return "Faehrte" end) == dwarfText then
         isDwarfText = true
         break
     end
@@ -235,7 +235,7 @@ local fallbackText = fallbackHunter.addon.BuildText("TRACKING")
 local generalChoices = fallbackHunter.addon.texts.TRACKING.ziel
 local isGeneralText = false
 for _, text in ipairs(generalChoices) do
-    if text == fallbackText then
+    if text:gsub("%%s", function() return "Faehrte" end) == fallbackText then
         isGeneralText = true
         break
     end
