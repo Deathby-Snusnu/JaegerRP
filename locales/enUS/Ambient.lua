@@ -64,4 +64,12 @@ addon.localeData.enUS.ambient = {
         "Out here, the smallest things reveal the greatest secrets.",
         "*checks the direction of the wind out of habit.*",
     },
+    -- Further hunting-life scenes
+    WEATHER = { "The wind is turning. The game noticed long ago.", "I trust the rain more than a sullen guide.", "*rubs a pinch of earth between the fingers to test its dampness.*", "*watches the wind bend the tips of the grass.*", "A storm? Excellent. We shall learn who was really awake." },
+    PROVISIONS = { "Hungry hunters make the worst decisions.", "Whoever hid the last crust of bread may confess now.", "*counts the rations while keeping an eye on the companion.*", "*cuts off a small strip of dried meat.*", "Map, quiver, water. Do not eat them in that order." },
+    TROPHY = { "A trophy tells of a battle, not necessarily of wisdom.", "Some antlers belong on a wall. Others belong in the woods.", "*examines an old notch on a piece of equipment.*", "*regards a hard-won keepsake and falls silent for a moment.*", "Sometimes the best prize is a tale nobody believes." },
+    BOW = { "A drawn bowstring forgives no careless fingers.", "Wood can creak before it gives way. Listen well.", "*checks the string and nocks for tiny defects.*", "*runs a hand down the back of a bow.*", "A good bowstring is more honest than many promises." },
+    FIREARM = { "Keep the powder dry, the eyes open and the finger off the trigger.", "If there must be a bang, let there be a reason.", "*checks the firearm mechanism and secures it again.*", "*wipes a small soot stain from the muzzle.*", "A well-kept gun only swears during cleaning." },
+    WATCH = { "I'll take the first watch. We can negotiate the second.", "Not every rustle means danger, but every one asks a question.", "*looks for high ground with an uninterrupted view.*", "*pauses and listens into the darkness.*", "Those who sleep are trusting. Those on watch deserve coffee." },
+    TRAVEL = { "A long road is merely a thousand small decisions.", "The next hill is always farther than it looks.", "*checks straps and buckles before setting off.*", "*unfolds the map and compares paths with the ridgelines.*", "When the route seems too easy, a piece of the map is probably missing." },
 }
