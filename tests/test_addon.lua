@@ -549,12 +549,12 @@ check(newClient({race="Skyborne"}).addon.GetPlayerRaceToken()
 
 -- Namen freundlicher Ziele dürfen nicht in Feindansprachen erscheinen.
 local friendlyTarget = newClient({race="Human", hostile=false})
-friendlyTarget.target = "Freund"
+friendlyTarget.target = "UNIQUE_FRIEND_TARGET_98765"
 for key, meta in pairs(friendlyTarget.addon.hunterSpellbook) do
     if meta.mode == "ENEMY" or meta.mode == "SELF"
         or meta.mode == "TRACK" or meta.mode == "AREA" then
         local line = friendlyTarget.addon.BuildText(key)
-        check(not line:find("Freund",1,true), key .. " cannot target friendly unit")
+        check(not line:find("UNIQUE_FRIEND_TARGET_98765",1,true), key .. " cannot target friendly unit")
         check(not line:find("%%s",1,true), key .. " does not leak format markers")
     end
 end
