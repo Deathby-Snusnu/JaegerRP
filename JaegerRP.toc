@@ -2,11 +2,12 @@
 ## Title: Jaeger RP
 ## Notes: Rollenspieltexte fuer Jaeger und ihre Begleiter
 ## Author: Hannes
-## Version: 0.5.1
+## Version: 0.6.0
 ## SavedVariablesPerCharacter: JaegerRP_CharacterDB
 ## OptionalDeps: RPChatMod
 
 config\Settings.lua
+data\Spellbook.lua
 locales\Init.lua
 locales\deDE\Texts.lua
 locales\deDE\Racial.lua
