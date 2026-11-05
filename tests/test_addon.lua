@@ -226,7 +226,7 @@ for _, text in ipairs(dwarfChoices) do
         break
     end
 end
-check(isDwarfText, "race-specific text is selected before general text")
+check(isDwarfText, "race-specific text is selected before general text (actual=" .. tostring(dwarfText) .. ", racial=" .. table.concat(dwarfChoices, " | ") .. ")")
 
 -- Voelker ohne eigenen Pool verwenden weiterhin allgemeine Jaegertexte.
 local fallbackHunter = newClient({ race = "Human" })
