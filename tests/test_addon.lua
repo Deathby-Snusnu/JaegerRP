@@ -586,6 +586,7 @@ local quietHunter = newClient({race="Dwarf"})
 quietHunter.command("ambient on")
 quietHunter.env.JaegerRP_CharacterDB.ambientChance = 100
 local sentBefore = #quietHunter.messages
+quietHunter.command("ambient chance 100")
 check(quietHunter.addon.QueueAmbient("WEATHER"), "ambient may queue WEATHER")
 check(#quietHunter.messages == sentBefore, "ambient scheduling never sends chat")
 
