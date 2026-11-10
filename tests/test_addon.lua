@@ -80,6 +80,12 @@ local function newClient(options)
         return state.target
     end
 
+    if options.secretSentinel then
+        env.issecretvalue = function(value)
+            return value == options.secretSentinel
+        end
+    end
+
     env.IsInGroup = function(category)
         if category then
             return state.instance
@@ -260,6 +266,45 @@ for _, text in ipairs(generalChoices) do
     end
 end
 check(isGeneralText, "missing racial literal uses cultural voice with general spell text")
+
+-- Geschuetzte Ziel- und Begleiternamen werden vor der Interpolation ersetzt.
+local secretSentinel = "SECRET_NAME_SENTINEL"
+local secretHunter = newClient({
+    race = "Human",
+    pet = secretSentinel,
+    secretSentinel = secretSentinel,
+})
+secretHunter.target = secretSentinel
+secretHunter.env.JaegerRP_CharacterDB.personalTexts.HUNTERS_MARK = {
+    "Target: %s.",
+}
+secretHunter.env.JaegerRP_CharacterDB.personalTexts.MEND_PET = {
+    "Pet: %s.",
+}
+local secretTargetText = secretHunter.addon.BuildText("HUNTERS_MARK")
+local secretPetText = secretHunter.addon.BuildText("MEND_PET")
+check(secretTargetText == "Target: das Ziel."
+    and not secretTargetText:find(secretSentinel, 1, true),
+    "secret target name is replaced before interpolation")
+check(secretPetText == "Pet: Euer Begleiter."
+    and not secretPetText:find(secretSentinel, 1, true),
+    "secret pet name is replaced before interpolation")
+
+-- Gewoehnliche Namen bleiben auch ohne die geschuetzte-Werte-API unveraendert.
+local ordinaryHunter = newClient({race = "Human", pet = "Ordinary Pet"})
+ordinaryHunter.target = "Ordinary Target"
+ordinaryHunter.env.JaegerRP_CharacterDB.personalTexts.HUNTERS_MARK = {
+    "Target: %s.",
+}
+ordinaryHunter.env.JaegerRP_CharacterDB.personalTexts.MEND_PET = {
+    "Pet: %s.",
+}
+check(type(ordinaryHunter.env.issecretvalue) ~= "function",
+    "client without issecretvalue remains supported")
+check(ordinaryHunter.addon.BuildText("HUNTERS_MARK") == "Target: Ordinary Target.",
+    "ordinary target name remains unchanged")
+check(ordinaryHunter.addon.BuildText("MEND_PET") == "Pet: Ordinary Pet.",
+    "ordinary pet name remains unchanged")
 
 -- Eigene Texte haben Vorrang vor Rassentexten.
 dwarfHunter.env.JaegerRP_CharacterDB.personalTexts.TRACKING = {

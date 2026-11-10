@@ -7,6 +7,17 @@
 
 local _, addon = ...
 
+-- Protected WoW clients may return secret strings for unit names.
+-- Use a safe placeholder before comparison or text interpolation.
+local function SafeUnitName(unit)
+    local name = UnitName(unit)
+    if type(issecretvalue) == "function" and issecretvalue(name) then
+        return addon.GetLocalizedPool("unitNames", unit)
+    end
+    return name
+end
+
+
 local SELF_ONLY = {
     ASPECT_HAWK=true, ASPECT_CHEETAH=true, ASPECT_MONKEY=true,
     RAPID_FIRE=true, DISENGAGE=true, TRACKING=true, CAMOUFLAGE=true,
@@ -47,14 +58,14 @@ local function ResolveTargetName(key)
         return nil
     end
     if mode == "PET" or PET_TARGET[key] then
-        return UnitExists("pet") and UnitName("pet") or nil
+        return UnitExists("pet") and SafeUnitName("pet") or nil
     end
     if not UnitExists("target") then return nil end
     if mode == "ENEMY" and type(UnitCanAttack) == "function"
         and not UnitCanAttack("player", "target") then
         return nil
     end
-    return UnitName("target")
+    return SafeUnitName("target")
 end
 
 

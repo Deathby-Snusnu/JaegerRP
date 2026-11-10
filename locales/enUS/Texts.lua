@@ -7,6 +7,12 @@
 
 local _, addon = ...
 
+addon.localeData.enUS.unitNames = {
+    pet = "your companion",
+    player = "you",
+    target = "the target",
+}
+
 addon.localeData.enUS.texts = {
  HUNTERS_MARK={ziel={"I have my eye on you, %s.","*fixes %s with a hunter's measured stare.*"},gruppe={"The prey is marked.","*signals the marked target to the companions.*"}},
  ARCANE_SHOT={ziel={"Arcane fire finds you, %s.","*fires at %s as arcane energy flares around the shot.*"},gruppe={"Arcane charge ready. Fire.","*looses a shot shimmering with arcane light.*"}},
