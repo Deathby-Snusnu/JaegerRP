@@ -7,6 +7,12 @@
 
 local _, addon = ...
 
+addon.localeData.deDE.unitNames = {
+    pet = "Euer Begleiter",
+    player = "Ihr",
+    target = "das Ziel",
+}
+
 -- RP-Konvention:
 -- Gesprochene Texte stehen ohne Markierung und nutzen den eingestellten Sprachkanal (Standard: /say).
 -- Beschreibende Handlungen stehen zwischen *Sternchen* und werden immer als /me ausgegeben.

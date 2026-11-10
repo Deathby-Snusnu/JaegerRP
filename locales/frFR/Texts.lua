@@ -7,6 +7,12 @@
 
 local _, addon = ...
 
+addon.localeData.frFR.unitNames = {
+    pet = "votre compagnon",
+    player = "vous",
+    target = "la cible",
+}
+
 addon.localeData.frFR.texts = {
  HUNTERS_MARK={ziel={"Je vous ai à l'œil, %s.","*fixe %s avec le regard mesuré d'un chasseur.*"},gruppe={"La proie est marquée.","*désigne la cible marquée aux compagnons.*"}},
  ARCANE_SHOT={ziel={"Le feu arcanique vous trouvera, %s.","*tire sur %s tandis que l'énergie arcanique embrase le projectile.*"},gruppe={"Charge arcanique prête. Feu.","*décoche un tir nimbé de lumière arcanique.*"}},

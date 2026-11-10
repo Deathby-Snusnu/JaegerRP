@@ -12,9 +12,7 @@ local _, addon = ...
 local function SafeUnitName(unit)
     local name = UnitName(unit)
     if type(issecretvalue) == "function" and issecretvalue(name) then
-        if unit == "pet" then return "Euer Begleiter" end
-        if unit == "player" then return "Ihr" end
-        return "das Ziel"
+        return addon.GetLocalizedPool("unitNames", unit)
     end
     return name
 end
