@@ -12,7 +12,7 @@ local _, addon = ...
 local function SafeUnitName(unit)
     local name = UnitName(unit)
     if type(issecretvalue) == "function" and issecretvalue(name) then
-        return nil -- Select a target-free RP line instead of an awkward label.
+        return addon.GetLocalizedPool("unitNames", unit)
     end
     return name
 end
