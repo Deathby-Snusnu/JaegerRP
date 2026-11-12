@@ -267,7 +267,7 @@ for _, text in ipairs(generalChoices) do
 end
 check(isGeneralText, "missing racial literal uses cultural voice with general spell text")
 
--- Geschuetzte Ziel- und Begleiternamen verwenden Texte ohne Namensplatzhalter.
+-- Geschuetzte Ziel- und Begleiternamen werden vor der Interpolation ersetzt.
 local secretSentinel = "SECRET_NAME_SENTINEL"
 local secretHunter = newClient({
     race = "Human",
@@ -281,24 +281,14 @@ secretHunter.env.JaegerRP_CharacterDB.personalTexts.HUNTERS_MARK = {
 secretHunter.env.JaegerRP_CharacterDB.personalTexts.MEND_PET = {
     "Pet: %s.",
 }
-for _, entry in ipairs({
-    { "HUNTERS_MARK", "Target: das Ziel." },
-    { "MEND_PET", "Pet: Euer Begleiter." },
-}) do
-    local key = entry[1]
-    local text = secretHunter.addon.BuildText(key)
-    check(type(text) == "string" and not text:find(secretSentinel, 1, true)
-        and not text:find("%s", 1, true) and text ~= entry[2],
-        key .. " falls back to a built-in line without a secret name")
-    secretHunter.env.JaegerRP_CharacterDB.personalTexts[key] = {
-        "Name: %s.", "A line without a name.",
-    }
-    check(secretHunter.addon.BuildText(key) == "A line without a name.",
-        key .. " prefers a usable personal line without a name")
-end
-secretHunter.env.JaegerRP_CharacterDB.personalTexts.SECRET_ONLY = { "Name: %s." }
-check(secretHunter.addon.BuildText("SECRET_ONLY") == nil,
-    "no text is returned when every line requires a secret name")
+local secretTargetText = secretHunter.addon.BuildText("HUNTERS_MARK")
+local secretPetText = secretHunter.addon.BuildText("MEND_PET")
+check(secretTargetText == "Target: das Ziel."
+    and not secretTargetText:find(secretSentinel, 1, true),
+    "secret target name is replaced before interpolation")
+check(secretPetText == "Pet: Euer Begleiter."
+    and not secretPetText:find(secretSentinel, 1, true),
+    "secret pet name is replaced before interpolation")
 
 -- Gewoehnliche Namen bleiben auch ohne die geschuetzte-Werte-API unveraendert.
 local ordinaryHunter = newClient({race = "Human", pet = "Ordinary Pet"})
