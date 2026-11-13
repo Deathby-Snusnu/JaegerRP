@@ -237,7 +237,10 @@ check(resolverClient.messages[#resolverClient.messages].language == 7,
     "missing resolver falls back to known racial language")
 
 -- Rassentexte werden vor den allgemeinen Texten gewaehlt.
-local dwarfHunter = newClient({ race = "Dwarf" })
+local dwarfHunter = newClient({
+    race = "Dwarf",
+    db = { racialTextChance = 100 },
+})
 dwarfHunter.command("chance 100")
 dwarfHunter.command("cooldown 0")
 dwarfHunter.target = "Faehrte"
@@ -314,7 +317,10 @@ check(dwarfHunter.addon.BuildText("TRACKING") == "*prueft das Gelaende auf Spure
     "personal text overrides racial text")
 
 -- Scourge verwendet dieselben Rassentexte wie Undead.
-local undeadHunter = newClient({ race = "Scourge" })
+local undeadHunter = newClient({
+    race = "Scourge",
+    db = { racialTextChance = 100 },
+})
 undeadHunter.target = "Spur"
 undeadHunter.addon.racial.Undead = {
     TRACKING = { gruppe = { "Untote Spur gesucht." } },
