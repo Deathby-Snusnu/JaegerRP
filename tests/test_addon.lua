@@ -162,6 +162,7 @@ client.login()
 
 -- Standardwerte.
 check(client.env.JaegerRP_CharacterDB.textChance == 30, "default chance")
+check(client.env.JaegerRP_CharacterDB.racialTextChance == 40, "default racial chance")
 check(client.env.JaegerRP_CharacterDB.cooldown == 20, "default cooldown")
 check(client.env.JaegerRP_CharacterDB.chatChannel == "SAY", "default channel")
 check(client.env.JaegerRP == client.addon, "public API")
@@ -256,7 +257,7 @@ end
 check(isDwarfText, "race-specific text is selected before general text (actual=" .. tostring(dwarfText) .. ", racial=" .. table.concat(dwarfChoices, " | ") .. ")")
 
 -- Voelker ohne eigenen Pool verwenden weiterhin allgemeine Jaegertexte.
-local fallbackHunter = newClient({ race = "Human" })
+local fallbackHunter = newClient({ race = "Human", db = { racialTextChance = 100 } })
 fallbackHunter.target = "Faehrte"
 local fallbackText = fallbackHunter.addon.BuildText("TRACKING")
 local generalChoices = fallbackHunter.addon.texts.TRACKING.gruppe
@@ -269,6 +270,47 @@ for _, text in ipairs(generalChoices) do
     end
 end
 check(isGeneralText, "missing racial literal uses cultural voice with general spell text")
+
+-- Rassentexte und Stil respektieren die eingestellte Wahrscheinlichkeit.
+local probabilityHunter = newClient({ race = "Dwarf" })
+local roll = 1
+probabilityHunter.env.math = setmetatable({
+    random = function(maximum) return maximum == 100 and roll or 1 end,
+}, { __index = math })
+local hasRacialPool = true
+probabilityHunter.addon.GetLocalePoolExact = function(_, kind)
+    if kind == "racial" then
+        return hasRacialPool and { "Racial." } or nil
+    end
+    return { "General." }
+end
+probabilityHunter.addon.StylizeRacialText = function(_, _, _, line)
+    return "Styled " .. line
+end
+probabilityHunter.addon.db.racialTextChance = 0
+check(probabilityHunter.addon.BuildText("TRACKING") == "General.",
+    "zero racial chance selects unstyled general text")
+probabilityHunter.addon.db.racialTextChance = 100
+roll = 100
+check(probabilityHunter.addon.BuildText("TRACKING") == "Racial.",
+    "100 percent racial chance selects racial text")
+hasRacialPool = false
+check(probabilityHunter.addon.BuildText("TRACKING") == "Styled General.",
+    "100 percent racial chance styles general text when racial text is absent")
+probabilityHunter.addon.db.racialTextChance = 40
+roll = 40
+check(probabilityHunter.addon.BuildText("TRACKING") == "Styled General.",
+    "racial styling includes the chance boundary")
+roll = 41
+check(probabilityHunter.addon.BuildText("TRACKING") == "General.",
+    "racial styling excludes rolls above the chance")
+hasRacialPool = true
+roll = 40
+check(probabilityHunter.addon.BuildText("TRACKING") == "Racial.",
+    "racial text includes the chance boundary")
+roll = 41
+check(probabilityHunter.addon.BuildText("TRACKING") == "General.",
+    "racial text excludes rolls above the chance")
 
 -- Geschuetzte Ziel- und Begleiternamen werden vor der Interpolation ersetzt.
 local secretSentinel = "SECRET_NAME_SENTINEL"
