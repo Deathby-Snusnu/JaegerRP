@@ -322,6 +322,7 @@ local undeadHunter = newClient({
     db = { racialTextChance = 100 },
 })
 undeadHunter.target = "Spur"
+undeadHunter.addon.db.racialTextChance = 100
 undeadHunter.addon.racial.Undead = {
     TRACKING = { gruppe = { "Untote Spur gesucht." } },
 }
