@@ -84,13 +84,14 @@ function addon.BuildText(key)
     local racial = addon.GetLocalePoolExact(lang, "racial", race, key)
         or addon.GetLocalePoolExact("deDE", "racial", race, key)
     local chance = addon.db and addon.db.racialTextChance or 40
-    local special = (math.random(100) <= chance) and ChooseText(racial, targetName) or nil
+    local useRacialText = math.random(100) <= chance
+    local special = useRacialText and ChooseText(racial, targetName) or nil
     if special then return special end
     local pool = addon.GetLocalePoolExact(lang, "texts", key)
         or addon.GetLocalePoolExact("deDE", "texts", key)
     local line = ChooseText(pool, targetName)
     if not line then return nil end
-    if addon.StylizeRacialText and math.random(100) <= chance then
+    if addon.StylizeRacialText and useRacialText then
         return addon.StylizeRacialText(lang, race, key, line)
     end
     return line

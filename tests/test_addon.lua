@@ -311,6 +311,20 @@ check(probabilityHunter.addon.BuildText("TRACKING") == "Racial.",
 roll = 41
 check(probabilityHunter.addon.BuildText("TRACKING") == "General.",
     "racial text excludes rolls above the chance")
+local chanceRolls = 0
+probabilityHunter.env.math = setmetatable({
+    random = function(maximum)
+        if maximum == 100 then
+            chanceRolls = chanceRolls + 1
+            return chanceRolls == 1 and 41 or 1
+        end
+        return 1
+    end,
+}, { __index = math })
+hasRacialPool = true
+check(probabilityHunter.addon.BuildText("TRACKING") == "General."
+    and chanceRolls == 1,
+    "failed racial chance leaves general text unchanged after one roll")
 
 -- Geschuetzte Ziel- und Begleiternamen werden vor der Interpolation ersetzt.
 local secretSentinel = "SECRET_NAME_SENTINEL"
