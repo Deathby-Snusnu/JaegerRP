@@ -431,3 +431,55 @@ addon.localeData.deDE.texts = {
     STRIDER_KICK = { gruppe = { "Aus diesem Winkel habt Ihr meinen Stiefel nicht kommen sehen.", "Auch lange Beine können eine sehr kurze Antwort geben.", "*setzt einen überraschenden, tiefen Tritt aus der Bewegung heraus.*", "*verlagert das Gewicht und stößt mit dem Absatz vor.*" }, ziel = { "Ein Schritt zu nah, %s. So lernt man Abstand." }, },
     BEAST_TRAINING = { gruppe = { "Die wichtigste Lektion beginnt nicht mit einem Befehl, sondern mit Vertrauen.", "Ein Gefährte lernt schneller, wenn man ihn auch versteht.", "*wiederholt geduldig ein Handzeichen und wartet auf die Reaktion.*", "*belohnt eine gelungene Übung mit freundlichem Nicken.*" }, },
 }
+
+
+-- Editorial pass II: ability-specific, target-free dialogue with varied emotes.
+local newLines = {
+    SERPENT_STING = {
+        "Das Gift arbeitet leise. Ich muss nicht danebenstehen und ihm Mut zureden.",
+        "*prüft die feine Beschichtung eines Geschosses, bevor er es in die Waffe legt.*",
+        "Ein Kratzer genügt. Der Rest ist eine Frage der Zeit.",
+        "*beobachtet ruhig, ob der Treffer die gewünschte Wirkung zeigt.*",
+    },
+    RAPTOR_STRIKE = {
+        "Zu nah für den Bogen? Dann eben mit Stahl.",
+        "*nimmt die Waffe kurz und setzt mit dem Knauf nach.*",
+        "Ein Jäger, der nur aus der Ferne kämpfen kann, kommt nicht weit.",
+    },
+    MEND_PET = {
+        "Ganz ruhig, mein Freund. Erst die Wunde, dann die Jagd.",
+        "*kniet neben seinem Begleiter, untersucht die Pfote und spricht beruhigend auf ihn ein.*",
+        "Die Narbe wird bleiben. Aber wir beide gehen noch nach Hause.",
+    },
+    FEED_PET = {
+        "Du bekommst den größeren Happen. Aber erzähl das keinem in der Taverne.",
+        "*legt seinem Begleiter ein Stück Fleisch hin und wartet, bis er zu fressen beginnt.*",
+        "Langsam kauen! Ich hab's auch nicht eilig.",
+    },
+    KILL_COMMAND = {
+        "Jetzt, zusammen! Du von links, ich halte die Flanke!",
+        "*gibt seinem Begleiter ein kurzes Handzeichen und sichert dessen Angriff.*",
+        "Nur Mut, mein Freund. Ich bin direkt hinter dir.",
+    },
+    FEIGN_DEATH = {
+        "Wenn die Geschichte jemand erzählt, war ich natürlich die ganze Zeit wach.",
+        "*lässt sich in den Staub fallen und hält den Atem auffallend überzeugend an.*",
+        "Totstellen ist kein Rückzug. Es ist Tarnung in Endlage.",
+    },
+    FREEZING_TRAP = {
+        "Der beste Hinterhalt ist einer, bei dem der Gegner selbst stehen bleibt.",
+        "*glättet den Boden über einer Falle und zieht sich langsam zurück.*",
+        "Ein falscher Schritt genügt. Ich hab Zeit.",
+    },
+    AIMED_SHOT = {
+        "Wind von rechts. Kleine Korrektur. Jetzt.",
+        "*senkt die Schultern, atmet aus und lässt den Finger ruhig am Abzug liegen.*",
+        "Ich warte lieber einen Augenblick, als einen Schuss zu verschwenden.",
+    },
+}
+for key, lines in pairs(newLines) do
+    local pool = addon.localeData.deDE.texts[key]
+    if pool and type(pool.gruppe) == "table" then
+        for _, line in ipairs(lines) do table.insert(pool.gruppe, line) end
+    end
+end
