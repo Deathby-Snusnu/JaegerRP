@@ -179,3 +179,43 @@ for _, line in ipairs({
     "*reibt etwas Erde zwischen den Fingern und prüft die Körnung.*",
     "Schnee verrät die Richtung. Stein verrät das Gewicht. Beides lügt selten.",
 }) do table.insert(dwarf.TRACKING.gruppe, line) end
+
+
+-- Editorial pass II: different hunters, different ways of seeing the world.
+local voices = addon.localeData.deDE.racial
+local additions = {
+    Dwarf = {
+        HUNTERS_MARK = {
+            "Der Wind steht quer. Trotzdem seh ich Euch. Was sagt das über Eure Deckung?",
+            "*legt das Gewehr auf einen Felsvorsprung und beobachtet den Hang durch die Visierung.*",
+        },
+        TRACKING = {
+            "Das ist kein Reh. Zu tief eingedrückt, zu breit im Schritt.",
+            "*fährt mit dem Daumen über eine frische Kerbe in der Rinde und nickt.*",
+        },
+    },
+    NightElf = {
+        HUNTERS_MARK = {
+            "Nicht die Augen verraten Euch. Das Schweigen der Vögel tut es.",
+            "*bleibt unter einer tief hängenden Astgabel regungslos stehen und lauscht.*",
+        },
+        TRACKING = {
+            "Der Farn richtet sich langsam wieder auf. Jemand ist erst vor Kurzem hier durch.",
+            "*berührt einen geknickten Halm, ohne die übrigen Pflanzen zu stören.*",
+        },
+    },
+    Orc = {
+        HUNTERS_MARK = {
+            "Wer die Fährte liest, muss nicht schreien, um Beute zu finden.",
+            "*prüft die Windrichtung und zieht die Schulterriemen enger.*",
+        },
+    },
+}
+for race, spells in pairs(additions) do
+    for key, lines in pairs(spells) do
+        local entry = voices[race] and voices[race][key]
+        if entry and type(entry.gruppe) == "table" then
+            for _, line in ipairs(lines) do table.insert(entry.gruppe, line) end
+        end
+    end
+end
