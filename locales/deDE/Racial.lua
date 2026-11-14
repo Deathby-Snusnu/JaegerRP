@@ -165,3 +165,17 @@ addon.localeData.deDE.racial = {
         
     },
 }
+
+-- Editorial expansion: distinct dwarven fieldcraft, target-free lines for protected names.
+local dwarf = addon.localeData.deDE.racial.Dwarf
+for _, line in ipairs({
+    "Die Spuren sind frisch. Der Kerl hat's eilig gehabt. Wird ihm nichts nutzen.",
+    "*schiebt den Gewehrriemen zurecht und mustert wortlos die Abdrücke im Schnee.*",
+    "Hab schon in schlechterem Licht getroffen. Damals war's unter Tage.",
+    "*hält einen Finger in den Wind und wartet, bis die Böe nachlässt.*",
+}) do table.insert(dwarf.HUNTERS_MARK.gruppe, line) end
+for _, line in ipairs({
+    "Dieser Kies ist frisch verschoben. Da ist jemand durch, vor kaum einer Stunde.",
+    "*reibt etwas Erde zwischen den Fingern und prüft die Körnung.*",
+    "Schnee verrät die Richtung. Stein verrät das Gewicht. Beides lügt selten.",
+}) do table.insert(dwarf.TRACKING.gruppe, line) end
