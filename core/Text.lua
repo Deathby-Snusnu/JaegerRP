@@ -77,6 +77,10 @@ function addon.BuildText(key)
         if text then return text end
     end
 
+    if addon.ChooseMusicText then
+        local music = addon.ChooseMusicText(key)
+        if music then return music end
+    end
     local race = addon.GetPlayerRaceToken and addon.GetPlayerRaceToken() or select(2, UnitRace("player"))
     local lang = addon.GetOutputLanguage()
     -- Existing custom racial texts stay first. All other spells are
