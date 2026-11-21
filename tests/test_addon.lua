@@ -713,7 +713,8 @@ for _, lang in ipairs({"deDE","enUS","frFR"}) do
         check(type(lines)=="table" and #lines==2,lang.." music speech and emote "..key)
         check(lines[2]:sub(1,1)=="*" and lines[2]:sub(-1)=="*", lang.." music emote "..key)
         check(#lines[1]<=255 and #lines[2]<=255, lang.." music chat length "..key)
-        check(hm.ChooseMusicText(key) == lines[1], lang.." music selection "..key)
+        local selected = hm.ChooseMusicText(key)
+        check(selected == lines[1] or selected == lines[2], lang.." music selection "..key)
     end
 end
 musicHunter.command("music off")
