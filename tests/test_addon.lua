@@ -697,4 +697,32 @@ quietHunter.command("ambient chance 100")
 check(quietHunter.addon.QueueAmbient("WEATHER"), "ambient may queue WEATHER")
 check(#quietHunter.messages == sentBefore, "ambient scheduling never sends chat")
 
+
+-- MusicRP remains optional, respects personal overrides and uses all locales.
+local musicHunter = newClient({race="Dwarf"})
+local hm = musicHunter.addon
+check(not hm.db.musicEnabled and hm.db.musicChance == 15, "MusicRP disabled by default")
+musicHunter.command("music on")
+musicHunter.command("music chance 100")
+check(hm.db.musicEnabled and hm.db.musicChance == 100, "MusicRP commands enable full chance")
+for _, lang in ipairs({"deDE","enUS","frFR"}) do
+    musicHunter.command("language "..lang)
+    for key, reference in pairs(hm.musicRPReferences) do
+        local lines = hm.musicRP[lang][key]
+        check(type(reference.song)=="string" and type(reference.artist)=="string", "music metadata "..key)
+        check(type(lines)=="table" and #lines==2,lang.." music speech and emote "..key)
+        check(lines[2]:sub(1,1)=="*" and lines[2]:sub(-1)=="*", lang.." music emote "..key)
+        check(#lines[1]<=255 and #lines[2]<=255, lang.." music chat length "..key)
+        check(hm.ChooseMusicText(key) == lines[1], lang.." music selection "..key)
+    end
+end
+musicHunter.command("music off")
+check(hm.ChooseMusicText("CALL_PET")==nil, "music disabled prevents output")
+musicHunter.command("music chance 101")
+check(hm.db.musicChance==100, "invalid music chance rejected")
+local personalMusicHunter = newClient({race="Dwarf",db={musicEnabled=true,musicChance=100,
+    personalTexts={CALL_PET={gruppe={"Eigener Begleiterspruch."}}}}})
+check(personalMusicHunter.addon.BuildText("CALL_PET")=="Eigener Begleiterspruch.",
+    "personal hunter texts precede music")
+
 print("PASS: JaegerRP, " .. checks .. " checks")
