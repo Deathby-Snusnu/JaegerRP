@@ -29,6 +29,20 @@ addon.musicRP.enUS.FEIGN_DEATH = { "When the rain comes, I shall lie still for a
 addon.musicRP.frFR.FEIGN_DEATH = { "Quand vient la pluie, je reste immobile un instant.", "*s'écroule sans bouger et observe entre ses paupières.*" }
 
 -- Called after personal texts, before ordinary class/racial text selection.
+-- Extra original spoken lines and actions for existing music-inspired keys.
+table.insert(addon.musicRP.deDE.RAPID_FIRE, "Das Magazin ist kein Versprechen. Aber ein guter Anfang.")
+table.insert(addon.musicRP.deDE.RAPID_FIRE, "*kontrolliert den Verschluss und atmet ruhig aus.*")
+table.insert(addon.musicRP.enUS.RAPID_FIRE, "A full magazine is no promise. But it is a good start.")
+table.insert(addon.musicRP.enUS.RAPID_FIRE, "*checks the action and breathes out slowly.*")
+table.insert(addon.musicRP.frFR.RAPID_FIRE, "Un chargeur plein ne garantit rien. Mais c'est un bon début.")
+table.insert(addon.musicRP.frFR.RAPID_FIRE, "*vérifie le mécanisme et expire lentement.*")
+table.insert(addon.musicRP.deDE.HUNTERS_MARK, "Manche Spuren verschwinden. Euer Schatten verrät Euch.")
+table.insert(addon.musicRP.deDE.HUNTERS_MARK, "*zeichnet mit zwei Fingern eine Spur durch den Staub.*")
+table.insert(addon.musicRP.enUS.HUNTERS_MARK, "Some tracks vanish. Your shadow tells the tale.")
+table.insert(addon.musicRP.enUS.HUNTERS_MARK, "*draws a trail through the dust with two fingers.*")
+table.insert(addon.musicRP.frFR.HUNTERS_MARK, "Certaines traces s'effacent. Votre ombre vous trahit.")
+table.insert(addon.musicRP.frFR.HUNTERS_MARK, "*dessine une piste dans la poussière de deux doigts.*")
+
 function addon.ChooseMusicText(key)
     if not addon.db or not addon.db.musicEnabled then return nil end
     local chance = addon.db.musicChance or 0
