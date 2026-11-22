@@ -710,11 +710,15 @@ for _, lang in ipairs({"deDE","enUS","frFR"}) do
     for key, reference in pairs(hm.musicRPReferences) do
         local lines = hm.musicRP[lang][key]
         check(type(reference.song)=="string" and type(reference.artist)=="string", "music metadata "..key)
-        check(type(lines)=="table" and #lines==2,lang.." music speech and emote "..key)
-        check(lines[2]:sub(1,1)=="*" and lines[2]:sub(-1)=="*", lang.." music emote "..key)
-        check(#lines[1]<=255 and #lines[2]<=255, lang.." music chat length "..key)
+        check(type(lines)=="table" and #lines>=2 and #lines%2==0,lang.." music speech and emote "..key)
+        for i, line in ipairs(lines) do
+            check(#line<=255,lang.." music chat length "..key)
+            if i%2==0 then check(line:sub(1,1)=="*" and line:sub(-1)=="*",lang.." music emote "..key) end
+        end
         local selected = hm.ChooseMusicText(key)
-        check(selected == lines[1] or selected == lines[2], lang.." music selection "..key)
+        local found=false
+        for _, line in ipairs(lines) do if line==selected then found=true end end
+        check(found,lang.." music selection "..key)
     end
 end
 musicHunter.command("music off")
